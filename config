@@ -1,0 +1,114 @@
+#!/bin/bash
+
+# /*
+#	This file is part of ghtml.
+#
+#    ghtml is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Foobar is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ghtml.  If not, see <http://www.gnu.org/licenses/>.
+#
+# */
+
+PACKAGE_NAME='ghtml';
+
+function STATUS() {
+	printf "$@"  >&2;
+}
+
+function new_make_file() {
+	[[ -e $MAKEFILE_NAME ]] && rm $MAKEFILE_NAME; true;
+}
+
+function make_make() { # do...
+	[[ -n $MAKEFILE_NAME ]] && printf "$@" >> $MAKEFILE_NAME;
+} 
+
+STATUS "Parsing possible configuration resources...\n";
+
+CONFIG_GUESS="
+	/usr/share/automake/config.guess
+	/usr/share/automake-1.11/config.guess
+	/usr/share/automake-1.4/config.guess
+	/usr/share/libtool/config/config.guess
+	/usr/share/misc/config.guess
+"
+
+for CFG in $CONFIG_GUESS; do
+	[[ -x $CFG ]] && {
+		CONFIG_SYS_TYPE=`${CFG}`
+	}
+done
+
+[[ -n $CONFIG_SYS_TYPE ]] || {
+	STATUS "Fatal error: Unable to locate \`config.guess'\n";
+	exit 1;
+}
+
+STATUS "System type detected... ($CONFIG_SYS_TYPE)\n";
+
+REQUIRED_PKG_CONFIGS=" --exists --print-errors
+	webkitgtk-3.0
+	seed
+"
+
+STATUS "Checking build requirements...\n";
+
+PKG_CONFIG_ERROR=`pkg-config $REQUIRED_PKG_CONFIGS 2>&1`;
+
+[[ -n $PKG_CONFIG_ERROR ]] && {
+	STATUS "CONFIG FATAL: `grep "not found" <<<"$PKG_CONFIG_ERROR"`\n";
+	exit 1;
+}
+
+# #################################################################################### #
+
+# @ Detect your system here as shown and name the appropriate makefile.
+
+[[ $CONFIG_SYS_TYPE =~ 'linux' ]] && {
+	MAKEFILE_NAME=makefile;
+}
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @
+
+[[ -z $MAKEFILE_NAME ]] && { # Fatal: system type was not handled.
+
+	STATUS "\nUnknown build system type: \`$CONFIG_SYS_TYPE'\n";
+	STATUS "configuration cannot proceed.\n\n";
+
+	STATUS "This does not mean the package will not build, it means\n";
+	STATUS "that I don't know anymore steps required to build it for\n"
+	STATUS "your system. You may consult the files in the build directory\n";
+	STATUS "for further guidance and or update this config file to support your\n";
+	STATUS "system by detecting the type and providing the makefile content.\n";
+	STATUS "on the fly.\n\n";
+
+	STATUS "please push system support updates to: pc.wiz.tt@gmail.com\n\n";
+
+	exit 1;
+
+}
+
+# #################################################################################### #
+
+# @ Detect your system here and import a defined make file, or script one as shown
+# @ below. make_make appends text to the makefile content.
+
+[[ $CONFIG_SYS_TYPE =~ 'linux' ]] && {
+	new_make_file;
+	make_make "# Automatically Generated $MAKEFILE_NAME for $PACKAGE_NAME\n\n";
+	make_make "include build/release/native-pc-linux-gnu\n";
+}
+
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @
+
+STATUS "ready to call $MAKEFILE_NAME to build $PACKAGE_NAME\n";
+

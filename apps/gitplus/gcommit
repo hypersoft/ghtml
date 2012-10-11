@@ -26,10 +26,8 @@ if (init.status) {
 
 var path = init.stdout;
 
-puts(path);
-
 if ( ! path.length ) {
-	console.error("Cannot commit: you are not in a git repository.");
+	console.error("Cannot commit: you are not in a git repository.\n");
 	quit(1);
 }
 
@@ -40,7 +38,7 @@ path = exec("pwd").stdout;
 var status = exec("git status -suno").stdout;
 
 if (status.length == 0) {
-	console.error("failed to retrieve status...");
+	console.error("failed to retrieve status...\n");
 	quit(1);
 }
 

@@ -59,7 +59,6 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
 void ghtml_webview_load(char *file) {
 
 	char in[INPUT_BUFFER_MAX];
-	charbuffer *data = charbuffer_from_void();
 
 	if (! getcwd(in, INPUT_BUFFER_MAX)) return;
 
@@ -68,20 +67,27 @@ void ghtml_webview_load(char *file) {
 	ghtml_app_directory = g_strdup(in);
 
 	if (file) {
-			if (*file == '/')
-				charbuffer_write_format(data, "file://%s", file);
-			else
-				charbuffer_write_format(data, "file://%s/%s", ghtml_app_directory, file);
-		webkit_web_view_load_uri(ghtml_webview, data->pointer);
+		char *content, *actual_content; gsize length;
+		if (g_file_get_contents(file, &actual_content, &length, NULL)) {
+			content = actual_content;
+			if (*content == '#' && *(content+1) == '!') {
+				while (*content != 0 && *content != '\n') content++;
+			}
+			sprintf(in, "file://%s", ghtml_app_directory);
+			webkit_web_view_load_string(ghtml_webview, content, NULL, NULL, in);
+			g_free(actual_content);
+		} else {
+			fprintf(stderr, "%s: error: unable to get contents of `%s'\n", ghtml_app_name, file);
+		}
 	} else {
+		charbuffer *data = charbuffer_from_void();
     	while (fgets(in, INPUT_BUFFER_MAX, stdin) == in) {
 			charbuffer_write_format(data, "%s", in);
 		}
 		sprintf(in, "file://%s", ghtml_app_directory);
 		webkit_web_view_load_string(ghtml_webview, data->pointer, NULL, NULL, in);
+		charbuffer_free(data);
 	}
-
-	charbuffer_free(data);
 
 }
 

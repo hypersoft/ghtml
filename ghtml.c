@@ -42,14 +42,12 @@ int main(int argc, char *argv[]) {
 	bool dialog = false;
 
     ghtml_app_name = argv[0];
-    ghtml_app_argc = argc;
-	ghtml_app_argv = argv;
 
     gtk_init(&argc, &argv);
 
 	ghtml_webview_load_statements = charbuffer_from_void();
 
-    if (argc > 1)
+    if (argc > 1) {
         while (++i < argc) {
 
 			if (g_str_equal(argv[i], "--")) break;
@@ -167,12 +165,17 @@ int main(int argc, char *argv[]) {
 				continue;
 			}
 
-			fprintf(stderr, 
-				"%s: error: unrecognized option request: %s\n", 
-			ghtml_app_name, argv[i]);
-			goto jump_ship;
+			break;
 
         }
+
+	    ghtml_app_argc = (argc - i);
+		ghtml_app_argv = argv + i;
+
+		//printf("First Script Argument: %s\n", ghtml_app_argv[0]);
+		//printf("Argument Count: %i\n", ghtml_app_argc);
+
+	}
 
 	ghtml_window_initialize(width, height, dialog, file);
 	

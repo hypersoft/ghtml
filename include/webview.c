@@ -250,16 +250,24 @@ void ghtml_webview_induct_view(void *this_window, void *this_frame, void *this_c
 
 	if (! ghtml_webview_global_context) {	// This should only run once for the main window and frame.
 
+		ghtml_webview_seed = seed_init_with_context (&ghtml_app_argc, &ghtml_app_argv, this_context);
+
 		ghtml_webview_main_frame = this_frame;
 		ghtml_webview_global_context = this_context;
 
 		void *global = JSContextGetGlobalObject(this_context);
 
+		void *jsargdata[ghtml_app_argc];
+
+		int i; for (i = 0; i < ghtml_app_argc; i++) jsargdata[i] = JSValueMakeString(this_context, JSStringCreateWithUTF8CString(ghtml_app_argv[i]));
+
+		void *jsarguments = seed_make_array(this_context, jsargdata, ghtml_app_argc,  NULL);
+
 	 	void *jsconsolestr = JSStringCreateWithUTF8CString("console");
 	 	void *jsconsole = (void *) JSObjectGetProperty(this_context, global, jsconsolestr, NULL);
 	 	JSStringRelease(jsconsolestr);
 
-		ghtml_webview_seed = seed_init_with_context (&ghtml_app_argc, &ghtml_app_argv, this_context);
+		JSObjectSetProperty(this_context, jsconsole, JSStringCreateWithUTF8CString("arguments"), jsarguments, kJSPropertyAttributeReadOnly, NULL);
 
 		JSObjectSetProperty(this_context, jsconsole, JSStringCreateWithUTF8CString("error"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_console_error), kJSPropertyAttributeReadOnly, NULL);
 		JSObjectSetProperty(this_context, jsconsole, JSStringCreateWithUTF8CString("write"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_puts), kJSPropertyAttributeReadOnly, NULL);

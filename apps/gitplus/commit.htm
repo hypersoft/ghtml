@@ -76,7 +76,7 @@ function build_selections() {
 
 	var option;
 
-	pwd.innerHTML = "<b>Path:&nbsp;</b>" + exec("pwd").stdout;
+	pwd.innerHTML = "<b>Path:&nbsp;</b>" + exec("git rev-parse --show-prefix").stdout;
 
 	if (modifications.length == 2) {
 		option = document.createElement("option");
@@ -235,7 +235,6 @@ function insertStatus() {
 <button type=button accessKey=s onclick="insertStatus();">Insert <span class=accelerator>s</span>tatus</button>
 <button type=button accessKey=a onclick="gitDetails.value += exec('xsel -o -b').stdout;">P<span class=accelerator>a</span>ste</button>
 <button type=button accessKey=r onclick="gitDetails.value += exec(prompt('Command')).stdout;"><span class=accelerator>R</span>un...</button>
-<input type=file accessKey=f>Insert <span class=accelerator>f</span>ile...</input>
 <br><br><input id=gitPush type=checkbox accessKey=p>
 <label for=gitPush><span class=accelerator>p</span>ush remote</label>
 </td></tr>

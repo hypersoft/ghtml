@@ -259,7 +259,7 @@ void ghtml_webview_induct_view(void *this_window, void *this_frame, void *this_c
 
 		void *jsargdata[ghtml_app_argc];
 
-		int i; for (i = 0; i < ghtml_app_argc; i++) jsargdata[i] = JSValueMakeString(this_context, JSStringCreateWithUTF8CString(ghtml_app_argv[i]));
+		int i; for (i = 0; i < ghtml_app_argc; i++) jsargdata[i] = (void *) JSValueMakeString(this_context, JSStringCreateWithUTF8CString(ghtml_app_argv[i]));
 
 		void *jsarguments = seed_make_array(this_context, jsargdata, ghtml_app_argc,  NULL);
 

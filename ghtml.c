@@ -84,6 +84,22 @@ int main(int argc, char *argv[]) {
 					goto missing_required_string;
 				}
             }
+            if (g_str_equal(argv[i], "--mime-type") || g_str_equal(argv[i], "-m")) {
+				if (argv[i + 1]) {
+	                ghtml_webview_mime_type = argv[++i];
+					continue;
+				} else {
+					goto missing_required_string;
+				}
+            }
+            if (g_str_equal(argv[i], "--encoding") || g_str_equal(argv[i], "-E")) {
+				if (argv[i + 1]) {
+	                ghtml_webview_document_encoding = argv[++i];
+					continue;
+				} else {
+					goto missing_required_string;
+				}
+            }
             if (g_str_equal(argv[i], "--dialog") || g_str_equal(argv[i], "-d")) {
                 dialog = true;
                 continue;
@@ -128,6 +144,22 @@ int main(int argc, char *argv[]) {
 					if (item == 'f') {
 						if (! *(combo + 1) && argv[i + 1]) {
 						    file = argv[++i];
+						    break;			                						
+						} else {
+							goto missing_required_string;
+						}
+					}
+					if (item == 'm') {
+						if (! *(combo + 1) && argv[i + 1]) {
+						    ghtml_webview_mime_type = argv[++i];
+						    break;			                						
+						} else {
+							goto missing_required_string;
+						}
+					}
+					if (item == 'f') {
+						if (! *(combo + 1) && argv[i + 1]) {
+						    ghtml_webview_document_encoding = argv[++i];
 						    break;			                						
 						} else {
 							goto missing_required_string;

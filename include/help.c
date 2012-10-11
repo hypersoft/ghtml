@@ -101,6 +101,9 @@ void ghtml_print_help(char *section) {
 		  puts("                             supplied, file is stdin. content-type");
 		  puts("                             is text/html.)\n");
 
+		printf("--mime-type {STRING} -  Specify document content-type\n");
+		printf("--encoding  {STRING} -  Specify document encoding\n\n");
+
 		  puts("--style-sheet or -s {URI} -  specify base motif URI\n");
 
 		  puts("--onload  or -o  {STATEMENTS} -\n");

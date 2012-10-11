@@ -74,7 +74,7 @@ void ghtml_webview_load(char *file) {
 				while (*content != 0 && *content != '\n') content++;
 			}
 			sprintf(in, "file://%s", ghtml_app_directory);
-			webkit_web_view_load_string(ghtml_webview, content, NULL, NULL, in);
+			webkit_web_view_load_string(ghtml_webview, content, ghtml_webview_mime_type, ghtml_webview_document_encoding, in);
 			g_free(actual_content);
 		} else {
 			fprintf(stderr, "%s: error: unable to get contents of `%s'\n", ghtml_app_name, file);
@@ -87,7 +87,7 @@ void ghtml_webview_load(char *file) {
 			charbuffer_write_format(data, "%s", in);
 		}
 		sprintf(in, "file://%s", ghtml_app_directory);
-		webkit_web_view_load_string(ghtml_webview, data->pointer, NULL, NULL, in);
+		webkit_web_view_load_string(ghtml_webview, data->pointer, ghtml_webview_mime_type, ghtml_webview_document_encoding, in);
 		charbuffer_free(data);
 	}
 

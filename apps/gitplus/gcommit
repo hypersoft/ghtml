@@ -14,22 +14,33 @@
 }
 
 </style>
+
 <script type=text/javascript>
 
-var Path = exec("git rev-parse --show-prefix").stdout;
+init = exec("git rev-parse --show-prefix");
 
-if ( ! Path ) {
+if (init.status) {
+	console.error("not a git repository path");
+	quit(1);
+}
+
+var path = init.stdout;
+
+puts(path);
+
+if ( ! path.length ) {
 	console.error("Cannot commit: you are not in a git repository.");
 	quit(1);
 }
 
 chdir(exec("git rev-parse --show-cdup").stdout.replace(/\n$/, ""));
 
-Path = exec("pwd").stdout;
+path = exec("pwd").stdout;
 
 var status = exec("git status -suno").stdout;
 
 if (status.length == 0) {
+	console.error("failed to retrieve status...");
 	quit(1);
 }
 
@@ -90,7 +101,7 @@ function build_selections() {
 
 	var option;
 
-	pwd.innerHTML = "<b>Path:&nbsp;</b>" + Path;
+	pwd.innerHTML = "<b>Path:&nbsp;</b>" + path;
 
 	if (modifications.length == 2) {
 		option = document.createElement("option");

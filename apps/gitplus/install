@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# YEAHHH!
+
 this=$0;
 localPath=${this%/*};
 

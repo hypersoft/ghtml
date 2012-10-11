@@ -1,0 +1,11 @@
+#!/bin/sh
+
+this=$0;
+localPath=${this%/*};
+
+mkdir -vp /usr/share/ghtml/gitplus;
+
+cp -vt /usr/share/ghtml/gitplus "${localPath}/commit.htm";
+cp -vt /usr/bin "${localPath}/gcommit";
+
+

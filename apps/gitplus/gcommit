@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ghtml -df /usr/share/ghtml/gitplus/commit.htm;
+

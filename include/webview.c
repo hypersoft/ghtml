@@ -6,7 +6,7 @@
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    ghtml is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -60,6 +60,7 @@ void ghtml_webview_load(char *file) {
 
 	char in[INPUT_BUFFER_MAX];
 	charbuffer *data = charbuffer_from_void();
+	FILE file_handle
 
 	if (! getcwd(in, INPUT_BUFFER_MAX)) return;
 
@@ -68,11 +69,15 @@ void ghtml_webview_load(char *file) {
 	ghtml_app_directory = g_strdup(in);
 
 	if (file) {
-			if (*file == '/')
-				charbuffer_write_format(data, "file://%s", file);
-			else
-				charbuffer_write_format(data, "file://%s/%s", ghtml_app_directory, file);
-		webkit_web_view_load_uri(ghtml_webview, data->pointer);
+		if (file_handle = fopen(file, "r")) {
+			if (fgets(in, 2, file_handle)
+			while (fgets(in, INPUT_BUFFER_MAX, file_handle) == in) {
+				charbuffer_write_format(data, "%s", in);
+			}
+			sprintf(in, "file://%s", ghtml_app_directory);
+			webkit_web_view_load_string(ghtml_webview, data->pointer, NULL, NULL, in);
+			fclose(file_handle);
+		}
 	} else {
     	while (fgets(in, INPUT_BUFFER_MAX, stdin) == in) {
 			charbuffer_write_format(data, "%s", in);

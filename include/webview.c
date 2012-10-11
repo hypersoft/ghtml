@@ -78,6 +78,8 @@ void ghtml_webview_load(char *file) {
 			g_free(actual_content);
 		} else {
 			fprintf(stderr, "%s: error: unable to get contents of `%s'\n", ghtml_app_name, file);
+			ghtml_app_exit_value = 1;
+			return;
 		}
 	} else {
 		charbuffer *data = charbuffer_from_void();

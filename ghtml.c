@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
 
 	ghtml_window_initialize(width, height, dialog, file);
 	
-	gtk_main();
+	if ( ! ghtml_app_exit_value ) gtk_main();
 
 	g_free (ghtml_webview_seed);
 

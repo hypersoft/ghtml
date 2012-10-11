@@ -234,7 +234,7 @@ JSValueRef ghtml_webview_console_print (JSContextRef ctx, JSObjectRef function, 
 	JSStringGetUTF8CString (jsstr, usrstring, length);
 	JSStringRelease(jsstr);
 	printf("%s", usrstring);
-	fflush(stderr);
+	fflush(stdout);
 	return JSValueMakeUndefined(ctx);
 }
 

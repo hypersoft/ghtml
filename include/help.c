@@ -63,7 +63,8 @@ void ghtml_print_help(char *section) {
 
 		  puts("Global Objects\n");
 
-		  puts("  imports       -  \"Gnome Seed\" runtime provider\n");
+		  puts("  Seed          -  \"Gnome Seed\" environment provisions");
+		  puts("  imports       -  \"Gnome Seed\" runtime importer\n");
 
 		  puts("-\n");
 

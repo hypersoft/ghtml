@@ -1,7 +1,7 @@
 ghtml
 =====
 
-The Graphical HTML Windowing Toolkit
+*The Graphical HTML Windowing Toolkit*
 
 It features its own lightweight build configuration system using **bash** and **pkg-config** as 
 its "special" runtime requirements. The configuration system also makes it extremely 
@@ -31,5 +31,5 @@ considerations.
 
  4. Private browsing is enabled for both infrastructure and user security
 
-This is a disciplinary security format. All security is based on **local content trust**,
-and **local user access rights**.
+**ghtml** operates in a discipline based security format. This means all security is 
+based on **local content trust**, and **local user access rights**.

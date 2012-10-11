@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
 			if (g_str_equal(argv[i], "--")) break;
 
-            if (g_str_equal(argv[i], "--width") || g_str_equal(argv[i], "-w")) {
+            if (g_str_equal(argv[i], "--width")) {
 				if (argv[i + 1]) {
 	                if ( ! sscanf(argv[++i], "%i", &width)) goto missing_required_integer;
 					continue;							
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 					goto missing_required_integer;
 				}
             }
-            if (g_str_equal(argv[i], "--height") || g_str_equal(argv[i], "-h")) {
+            if (g_str_equal(argv[i], "--height")) {
 				if (argv[i + 1]) {
 	                if ( ! sscanf(argv[++i], "%i", &height)) goto missing_required_integer;
 					continue;
@@ -119,22 +119,6 @@ int main(int argc, char *argv[]) {
 			if (g_str_has_prefix(argv[i], "-") && argv[i][1] != '-') {
 				char *combo = argv[i], item = 0;
 				while (item = *(++combo)) {
-					if (item == 'w') {
-						if (! *(combo + 1) && argv[i + 1]) {
-			                if ( ! sscanf(argv[++i], "%i", &width)) goto missing_required_integer;
-							break;							
-						} else {
-							goto missing_required_integer;
-						}
-					}
-					if (item == 'h') {
-						if (! *(combo + 1) && argv[i + 1]) {
-			                if ( ! sscanf(argv[++i], "%i", &height)) goto missing_required_integer;
-							break;							
-						} else {
-							goto missing_required_integer;
-						}
-					}
 					if (item == 't') {
 						if (! *(combo + 1) && argv[i + 1]) {
 						    ghtml_app_title = argv[++i];

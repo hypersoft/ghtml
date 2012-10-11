@@ -28,7 +28,7 @@ void ghtml_print_help(char *section) {
 
 		  puts("Author: Triston J. Taylor 2012 (pc.wiz.tt@gmail.com)\n");
 
-		  puts("Version: 0.67");
+		  puts("Version: 0.72");
 		  puts("License: GPL Version 3");
 		  puts("Toolkit: WebKitGTK+ 1.8.1\n");
 
@@ -82,8 +82,8 @@ void ghtml_print_help(char *section) {
 
 		printf ("Description: The Graphical HTML Windowing Toolkit\n\n");
 
-		printf("--width  or -w  {INTEGER} -  Set the window width\n");
-		printf("--height or -h  {INTEGER} -  Set the window height\n\n");
+		printf("--width  {INTEGER} -  Set the window width\n");
+		printf("--height {INTEGER} -  Set the window height\n\n");
 
 		  puts("--title  or -t  {STRING}  -  Set the window title (if not supplied");
 		  puts("                             document title is used.)\n");

@@ -61,6 +61,14 @@ void ghtml_print_help(char *section) {
 
 		  puts("-\n");
 
+		  puts("Console Properties\n");
+
+		  puts("  console.arguments[]    -  Command line arguments not used by GTK+,");
+		  puts("                            ghtml, or seed. Specify -- to signify script");
+		  puts("                            arguments.");
+
+		  puts("-\n");
+
 		  puts("Global Objects\n");
 
 		  puts("  Seed          -  \"Gnome Seed\" environment provisions");

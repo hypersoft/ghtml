@@ -46,27 +46,22 @@ static void ghtml_window_initialize(int width, int height, bool as_dialog, void 
 
 	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
 
+	gtk_widget_set_visual(ghtml_window_scrollable_content_area, this_compositing);
+
 	ghtml_webview = WEBKIT_WEB_VIEW(webkit_web_view_new());
 
 	gtk_container_add(ghtml_window, ghtml_window_scrollable_content_area);
+
 	if (as_dialog) {
 		gtk_window_set_type_hint((void*) ghtml_window, GDK_WINDOW_TYPE_HINT_DIALOG);
-
 		GtkAccelGroup *gtk_accel = gtk_accel_group_new ();
 		GClosure *closure;
 		closure = g_cclosure_new (G_CALLBACK (ghtml_window_escaped), NULL, NULL);
 		gtk_accel_group_connect (gtk_accel, gdk_keyval_from_name ("Escape"), 0, GTK_ACCEL_LOCKED, closure);
 		gtk_window_add_accel_group (ghtml_window, gtk_accel);
-
-		if (this_compositing) {
-			gtk_widget_set_visual(ghtml_window_scrollable_content_area, this_compositing);
-			ghtml_webview_initialize(ghtml_window_scrollable_content_area, file, true);
-		} else {
-			ghtml_webview_initialize(ghtml_window_scrollable_content_area, file, false);
-		}
-	} else {
-		ghtml_webview_initialize(ghtml_window_scrollable_content_area, file, false);
 	}
+
+	ghtml_webview_initialize(ghtml_window_scrollable_content_area, file, true);
 
 }
 

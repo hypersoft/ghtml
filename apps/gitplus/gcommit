@@ -26,11 +26,6 @@ if (init.status) {
 
 var path = init.stdout;
 
-if ( ! path.length ) {
-	console.error("Cannot commit: you are not in a git repository.\n");
-	quit(1);
-}
-
 chdir(exec("git rev-parse --show-cdup").stdout.replace(/\n$/, ""));
 
 path = exec("pwd").stdout;

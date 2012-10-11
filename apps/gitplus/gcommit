@@ -1,9 +1,10 @@
-#!/bin/ghtml -f
+#!/bin/ghtml -df
 
 <html>
 <head>
 <title>Git - Commit</title>
 <style>
+
 * {
 	font-size: 10pt;
 }
@@ -14,6 +15,17 @@
 
 </style>
 <script type=text/javascript>
+
+var Path = exec("git rev-parse --show-prefix").stdout;
+
+if ( ! Path ) {
+	console.error("Cannot commit: you are not in a git repository.");
+	quit(1);
+}
+
+chdir(exec("git rev-parse --show-cdup").stdout.replace(/\n$/, ""));
+
+Path = exec("pwd").stdout;
 
 var status = exec("git status -suno").stdout;
 
@@ -78,7 +90,7 @@ function build_selections() {
 
 	var option;
 
-	pwd.innerHTML = "<b>Path:&nbsp;</b>" + exec("git rev-parse --show-prefix").stdout;
+	pwd.innerHTML = "<b>Path:&nbsp;</b>" + Path;
 
 	if (modifications.length == 2) {
 		option = document.createElement("option");

@@ -44,7 +44,8 @@ void ghtml_print_help(char *section) {
 
 		  puts("  getenv(name)         -   get environment variable"); 
 		  puts("  setenv(name, value)  -   set environment variable");
-		  puts("  delenv(string)       -   delete environment variable\n");
+		  puts("  delenv(string)       -   delete environment variable");
+		  puts("  chdir(name)          -   change current directory\n"); 
 
 		  puts("  exec(string)    -   capture stdout, stderr and status of command");
 		  puts("  puts(string)    -   print line terminated data on console");

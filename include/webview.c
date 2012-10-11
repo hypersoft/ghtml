@@ -174,6 +174,17 @@ JSValueRef ghtml_webview_puts (JSContextRef ctx, JSObjectRef function, JSObjectR
 	return JSValueMakeUndefined(ctx);
 }
 
+JSValueRef ghtml_webview_chdir (JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+	void *usrstring;
+	size_t length;
+	void * jsstr = JSValueToStringCopy(ctx, arguments[0], NULL);
+	length = JSStringGetMaximumUTF8CStringSize (jsstr);
+	usrstring = g_alloca (length * sizeof (gchar));
+	JSStringGetUTF8CString (jsstr, usrstring, length);
+	JSStringRelease(jsstr);
+	return JSValueMakeNumber(ctx, g_chdir(usrstring));
+}
+
 JSValueRef ghtml_webview_getenv (JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
 	void *usrstring;
 	size_t length;
@@ -279,6 +290,7 @@ void ghtml_webview_induct_view(void *this_window, void *this_frame, void *this_c
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("setenv"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_setenv), kJSPropertyAttributeReadOnly, NULL);
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("puts"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_puts), kJSPropertyAttributeReadOnly, NULL);
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("exec"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_exec), kJSPropertyAttributeReadOnly, NULL);
+		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("chdir"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_chdir), kJSPropertyAttributeReadOnly, NULL);
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("quit"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_quit), kJSPropertyAttributeReadOnly, NULL);
 
 	}

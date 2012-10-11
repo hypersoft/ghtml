@@ -311,11 +311,12 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	g_object_set (G_OBJECT(these_settings), "enable-dom-paste", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webgl", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webaudio", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-private-browsing", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-universal-access-from-file-uris", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-file-access-from-file-uris", TRUE, NULL);
 
-	if (ghtml_webview_explode == true) 	g_object_set (G_OBJECT(these_settings), "enable-frame-flattening", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-frame-flattening", ghtml_webview_explode, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-private-browsing", ghtml_webview_private_browsing, NULL);
+
 	if (ghtml_webview_motif_uri) g_object_set (G_OBJECT(these_settings), "user-stylesheet-uri", ghtml_webview_motif_uri, NULL);
 
 	webkit_web_view_set_settings (ghtml_webview, these_settings);

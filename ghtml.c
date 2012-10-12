@@ -52,10 +52,6 @@ int main(int argc, char *argv[]) {
 
 			if (g_str_equal(argv[i], "--")) break;
 
-            if (g_str_equal(argv[i], "+P")) {
-				ghtml_webview_private_browsing = FALSE;
-				continue;
-            }
             if (g_str_equal(argv[i], "--width")) {
 				if (argv[i + 1]) {
 	                if ( ! sscanf(argv[++i], "%i", &width)) goto missing_required_integer;

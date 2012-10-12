@@ -33,9 +33,9 @@ void *ghtml_webview_main_frame = 0;
 void *ghtml_webview_global_context = 0;
 void *ghtml_webview_mime_type = NULL;
 void *ghtml_webview_document_encoding = NULL;
+
 void *ghtml_webview_motif_uri = 0;
 bool ghtml_webview_explode = false;
-bool ghtml_webview_private_browsing = true;
 
 charbuffer *ghtml_webview_load_statements = 0;
 

@@ -105,8 +105,6 @@ void ghtml_print_help(char *section) {
 		printf("--mime-type {STRING} -  Specify document content-type\n");
 		printf("--encoding  {STRING} -  Specify document encoding\n\n");
 
-		printf("+P -  Disable private browsing\n\n");
-
 		  puts("--style-sheet or -s {URI} -  specify base motif URI\n");
 
 		  puts("--onload  or -o  {STATEMENTS} -\n");

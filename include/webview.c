@@ -127,45 +127,49 @@ JSValueRef ghtml_webview_exec (JSContextRef ctx, JSObjectRef function, JSObjectR
 
 JSValueRef ghtml_webview_console_exec (JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
 
-	void *usrcommand;
+	char ** nargv, * usrcommand = seed_value_to_string(ctx, arguments[0], exception);
 
-    void *jsstr = JSValueToStringCopy(ctx, arguments[0], NULL);
-	if (!jsstr) return JSValueMakeUndefined(ctx);
-	size_t length = JSStringGetMaximumUTF8CStringSize (jsstr);
-	usrcommand = g_alloca (length * sizeof (gchar));
-	JSStringGetUTF8CString (jsstr, usrcommand, length);
-
-	char **nargv;
 	int nargc, child_status;
 
-	JSObjectRef js_return = (JSObjectRef) JSValueMakeUndefined(ctx);
+	void *exec = (JSObjectRef) JSValueMakeUndefined(ctx);
 
 	if (g_shell_parse_argv(usrcommand, &nargc, &nargv, NULL)) {
+
 		if (g_spawn_sync(NULL, nargv, NULL, G_SPAWN_LEAVE_DESCRIPTORS_OPEN | G_SPAWN_SEARCH_PATH | G_SPAWN_CHILD_INHERITS_STDIN, NULL, NULL, NULL, NULL, &child_status, NULL)) {
-			js_return = (JSObjectRef) JSValueMakeNumber(ctx, WEXITSTATUS(child_status));
+
+			exec = (JSObjectRef) JSValueMakeNumber(ctx, WEXITSTATUS(child_status));
 		}
+
 		g_strfreev(nargv);
+
 	}
 
-	JSStringRelease(jsstr);
+	g_strfreev(usrcommand);
 
-	return js_return;
+	return exec;
 
 }
 
 JSValueRef ghtml_webview_quit (void *ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  if (argumentCount == 1)
-    {
-      exit (seed_value_to_int (ctx, (const SeedValue) arguments[0], NULL));
-    }
-  else if (argumentCount > 1)
-    {
-      seed_make_exception (ctx, exception, "ArgumentError",
-			   "quit expected " "1 argument, got %zd",
-			   argumentCount);
-    }
 
-  exit (EXIT_SUCCESS);
+	if (argumentCount == 1) {
+
+		exit(
+			seed_value_to_int(ctx, (const SeedValue) arguments[0], exception)
+		);
+
+	} else if (argumentCount > 1) {
+
+		seed_make_exception(
+			ctx, exception, "ArgumentError",
+			"quit expected 1 argument, got %zd",
+			argumentCount
+		);
+
+	}
+
+	exit (EXIT_SUCCESS);
+
 }
 
 JSValueRef ghtml_webview_puts (JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {

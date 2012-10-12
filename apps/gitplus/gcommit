@@ -24,8 +24,6 @@ if (init.status) {
 	quit(1);
 }
 
-var path = init.stdout;
-
 chdir(exec("git rev-parse --show-cdup").stdout.replace(/\n$/, ""));
 
 path = exec("pwd").stdout;
@@ -33,8 +31,8 @@ path = exec("pwd").stdout;
 var status = exec("git status -suno").stdout;
 
 if (status.length == 0) {
-	console.error("failed to retrieve status...\n");
-	quit(1);
+	console.error("Everything up to date...\n");
+	quit(0);
 }
 
 var branch_info = exec("git branch");

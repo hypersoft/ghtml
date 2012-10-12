@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
 					fprintf(stderr, 
 						"%s: error: unrecognized short option: %c\n", 
 					ghtml_app_name, item);
-					return ghtml_app_exit_value;
+					return 1;
 				}
 				continue;
 			}
@@ -211,23 +211,23 @@ int main(int argc, char *argv[]) {
 
 	ghtml_window_initialize(width, height, dialog, file);
 	
-	if ( ! ghtml_app_exit_value ) gtk_main();
+	gtk_main();
 
 	g_free (ghtml_webview_seed);
 
 	jump_ship:  
-    return ghtml_app_exit_value;
+    return EXIT_SUCCESS;
 
 missing_required_integer:
 	fprintf(stderr, 
 		"%s: error: option: %s requires integer argument\n", 
 	ghtml_app_name, argv[i]);
-    return ghtml_app_exit_value;
+    return 1;
 
 missing_required_string:
 	fprintf(stderr, 
 		"%s: error: option: %s requires string argument\n", 
 	ghtml_app_name, argv[i]);
-    return ghtml_app_exit_value;
+    return 1;
 
 }

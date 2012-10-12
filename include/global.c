@@ -16,7 +16,6 @@
 
 */
 
-int   ghtml_app_exit_value = 0;
 char *ghtml_app_name = 0;
 
 int   ghtml_app_argc;

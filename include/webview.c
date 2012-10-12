@@ -78,7 +78,7 @@ void ghtml_webview_load(char *file) {
 			g_free(actual_content);
 		} else {
 			fprintf(stderr, "%s: error: unable to get contents of `%s'\n", ghtml_app_name, file);
-			ghtml_app_exit_value = 1;
+			exit(1);
 			return;
 		}
 	} else {
@@ -153,12 +153,19 @@ JSValueRef ghtml_webview_console_exec (JSContextRef ctx, JSObjectRef function, J
 
 }
 
-JSValueRef ghtml_webview_quit (JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-	void *usrstring;
-	size_t length;
-	ghtml_app_exit_value = JSValueToNumber(ctx, arguments[0], NULL);
-	webkit_web_view_execute_script(ghtml_webview, "window.close();");
-	return JSValueMakeUndefined(ctx);
+JSValueRef ghtml_webview_quit (void *ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  if (argumentCount == 1)
+    {
+      exit (seed_value_to_int (ctx, (const SeedValue) arguments[0], NULL));
+    }
+  else if (argumentCount > 1)
+    {
+      seed_make_exception (ctx, exception, "ArgumentError",
+			   "quit expected " "1 argument, got %zd",
+			   argumentCount);
+    }
+
+  exit (EXIT_SUCCESS);
 }
 
 JSValueRef ghtml_webview_puts (JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
@@ -291,7 +298,7 @@ void ghtml_webview_induct_view(void *this_window, void *this_frame, void *this_c
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("puts"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_puts), kJSPropertyAttributeReadOnly, NULL);
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("exec"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_exec), kJSPropertyAttributeReadOnly, NULL);
 		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("chdir"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_chdir), kJSPropertyAttributeReadOnly, NULL);
-		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("quit"), JSObjectMakeFunctionWithCallback(this_context, NULL, ghtml_webview_quit), kJSPropertyAttributeReadOnly, NULL);
+		JSObjectSetProperty(this_context, global, JSStringCreateWithUTF8CString("quit"), JSObjectMakeFunctionWithCallback(this_context, NULL, (void*) ghtml_webview_quit), kJSPropertyAttributeReadOnly, NULL);
 
 	}
 

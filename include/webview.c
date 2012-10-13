@@ -84,6 +84,7 @@ void ghtml_webview_load(char *file) {
 			return;
 		}
 	} else {
+		ghtml_app_file = "stdin";
 		charbuffer *data = charbuffer_from_void();
     	while (fgets(in, INPUT_BUFFER_MAX, stdin) == in) {
 			charbuffer_write_format(data, "%s", in);
@@ -99,7 +100,7 @@ void ghtml_webview_window_cleared(WebKitWebView *webkitwebview, WebKitWebFrame *
 	ghtml_webview_js_init(context, frame);
 }
 
-void ghtml_webview_initialize(void *this_container, void *this_file, bool as_transparent) {
+void ghtml_webview_initialize(void *this_container, bool as_transparent) {
 
 	WebKitWebSettings *these_settings = webkit_web_settings_new ();
 
@@ -132,7 +133,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 
     gtk_widget_show(ghtml_window);
 
-	ghtml_webview_load(this_file);
+	ghtml_webview_load(ghtml_app_file);
 
 }
 

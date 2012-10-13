@@ -25,7 +25,7 @@ gboolean ghtml_window_escaped (GtkAccelGroup *accel_group, GObject *acceleratabl
 	webkit_web_view_execute_script(ghtml_webview, "window.close();");
 }
 
-static void ghtml_window_initialize(int width, int height, bool as_dialog, void *file) {
+static void ghtml_window_initialize(int width, int height, bool as_dialog) {
 
 	ghtml_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -61,7 +61,7 @@ static void ghtml_window_initialize(int width, int height, bool as_dialog, void 
 		gtk_window_add_accel_group (ghtml_window, gtk_accel);
 	}
 
-	ghtml_webview_initialize(ghtml_window_scrollable_content_area, file, true);
+	ghtml_webview_initialize(ghtml_window_scrollable_content_area, true);
 
 }
 

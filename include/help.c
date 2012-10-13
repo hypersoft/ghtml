@@ -92,9 +92,9 @@ void ghtml_help(char *section) {
 
 		printf ("Description: The Graphical HTML Windowing Toolkit\n\n");
 
-		  puts("parse: {ARGUMENTS} -  When the first argument has the prefix: `parse: '");
-		  puts("                      ghtml will parse the first argument as a script");
-		  puts("                      environment directive.\n");
+		  puts("init: {ARGUMENTS} -  When the first argument has the prefix: `init: '");
+		  puts("                     ghtml will parse the first argument as a set of");
+		  puts("                     arguments.\n");
 
 		printf("--width  {INTEGER} -  Set the window width\n");
 		printf("--height {INTEGER} -  Set the window height\n\n");

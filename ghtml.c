@@ -234,7 +234,7 @@ missing_required_integer:
     exit(1);
 
 missing_required_string:
-	if (g_str_equal(argv[0], "parse:")) {
+	if (g_str_equal(argv[0], "init:")) {
 		ghtml_xargs_require_file = true;
 		return 1;
 	}
@@ -268,7 +268,7 @@ int main(int argc, char *argv[]) {
 	int nargc; char **nargv;
 
 	if (argc > 1) {
-		if (g_str_has_prefix(argv[1], "parse: ") && g_shell_parse_argv(argv[1], &nargc, &nargv, NULL) && nargc > 1) {
+		if (g_str_has_prefix(argv[1], "init: ") && g_shell_parse_argv(argv[1], &nargc, &nargv, NULL) && nargc > 1) {
 			parse_arguments(nargc, nargv, false);
 			g_strfreev(nargv);
 			--argc; ++argv;

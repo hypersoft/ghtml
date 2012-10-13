@@ -1,0 +1,116 @@
+#!/bin/sh
+
+# /*
+#	This file is part of ghtml.
+#
+#    ghtml is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ghtml is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ghtml.  If not, see <http://www.gnu.org/licenses/>.
+#
+# */
+
+group="$1"; shift 1;
+
+test $# -gt 0 && test "$1" = '-e' && { shift 1; exec=true; }
+
+test $# -gt 0 && { title="$1"; shift 1; }
+
+this="$0" localPath="${this%/*}" installHook="$localPath/$group/@installhook";
+here='.' installDefault="/usr/bin" installDir="${INSTALLDIR:-$installDefault}";
+
+test "$group" = --help || test "$group" = -h || test "$group" = '-?' || \
+test -z "$group" && {
+
+echo '\n'USAGE: $this group [-e] [title]';\n';
+
+echo "DESCRIPTION: Install the application by its group name and";
+echo "title to environment variable INSTALLDIR or $installDefault"'\n';
+
+echo "group: The name of the path in $here/$localPath";
+echo "title: The name of the file in: $here/$localPath/group"'\n';
+
+echo "If option -e is supplied, execute the title, with remaining arguments,";
+echo "instead of copying it. If title is not supplied with -e list group executables" \
+'\n';
+
+echo "If title is not supplied, execute $here/$localPath/group/@installhook";
+echo "if that program is not present, try to install";
+echo "$here/$localPath/group/group and if that fails show a listing";
+echo "of all valid resources belonging to group"'\n';
+
+echo "if title is -- all following arguments are passed to ";
+echo "$here/$localPath/group/@installhook"'\n';
+
+test -w $installDir ||
+echo You must have sufficient privileges to perform this operation.'\n';
+
+exit;
+
+}
+
+byTitle="$localPath/$group/$title";
+byInstallHook="$localPath/$group/@installhook";
+byGroup="$localPath/$group/$group";
+
+test -z "$title" || test "$title" = '--' && {
+	test -e "$byInstallHook" && { (
+		export this group title localPath installHook installDefault installDir \
+		byGroup; exec "$byInstallHook" "$@";
+	);   exit;
+	}
+	resource="$byGroup";
+} || {
+	resource="$byTitle";
+}
+
+test "$exec" = "true" && {
+
+	test -x "$byTitle" && test -n "$title"  && {
+		exec "$byTitle" "$@";
+	} || {
+		echo '\n'"Listing of executable targets for $group:"'\n'
+		(	IFS='\n';
+			for file in `cd "$localPath/$group"; echo *`; do
+				test -x "$localPath/$group/$file" && {
+					haveTargets=true;
+					echo "$file";
+				}
+			done
+			test "$haveTargets" = "true" || echo NO TARGETS AVAILABLE FOR GROUP;
+		);  echo ""; 
+	};  exit;
+
+} || {
+
+	echo "";
+	test ! -e "$resource" && {
+		(   cd "$localPath/$group";
+			echo "Listing of resources in $group:"'\n';
+			list=`echo -n *`
+			test -z "$list" && echo NO RESOURCES AVAILABLE FOR GROUP'\n' || echo \
+			"$list"'\n'
+		);  exit 1;
+	}
+
+	test -w $installDir || {
+		echo '\n'"You don't have sufficient privileges to perform this operation."'\n';
+		exit 1;
+	} >&2;
+
+	status=`cp -vt "$installDir" "$resource" 2>&- || \
+	echo -n "$this: $group: operation failed: " >&2;`;
+
+	echo "$status";
+
+	echo "";
+
+}

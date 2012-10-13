@@ -28,7 +28,7 @@ void ghtml_help(char *section) {
 
 		  puts("Author: Triston J. Taylor 2012 (pc.wiz.tt@gmail.com)\n");
 
-		  puts("Version: 0.74");
+		  puts("Version: 0.76");
 		  puts("License: GPL Version 3");
 		  puts("Toolkit: WebKitGTK+ 1.8.1\n");
 
@@ -92,6 +92,10 @@ void ghtml_help(char *section) {
 
 		printf ("Description: The Graphical HTML Windowing Toolkit\n\n");
 
+		  puts("parse: {ARGUMENTS} -  When the first argument has the prefix: `parse: '");
+		  puts("                      ghtml will parse the first argument as a script");
+		  puts("                      environment directive.\n");
+
 		printf("--width  {INTEGER} -  Set the window width\n");
 		printf("--height {INTEGER} -  Set the window height\n\n");
 
@@ -100,10 +104,12 @@ void ghtml_help(char *section) {
 
 		  puts("--file   or -f  {PATH}    -  Load a file into the web view (if not");
 		  puts("                             supplied, file is stdin. content-type");
-		  puts("                             is text/html.)\n");
+		  puts("                             is text/html. Specifying this option,)");
+		  puts("                             forwards remaining arguments to file.");
+
 
 		printf("--mime-type {STRING} -  Specify document content-type\n");
-		printf("--encoding  {STRING} -  Specify document encoding\n\n");
+		printf("--charset   {STRING} -  Specify document encoding\n\n");
 
 		  puts("--style-sheet or -s {URI} -  specify base motif URI\n");
 

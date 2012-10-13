@@ -47,4 +47,8 @@ bool ghtml_xargs_require_file = false;
 int ghtml_webview_width = 0, ghtml_webview_height = 0;
 bool ghtml_webview_dialog = false;
 
+bool ghtml_webview_96dpi = false;
+bool ghtml_webview_geolocation = true;
+
+char *ghtml_webview_user_agent = 0;
 

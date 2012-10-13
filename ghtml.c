@@ -35,17 +35,21 @@
 
 #include "include/help.c"
 
-int main(int argc, char *argv[]) {
+bool ghtml_xargs_require_file = false;
+int ghtml_webview_width = 0, ghtml_webview_height = 0;
+bool ghtml_webview_dialog = false;
 
+int parse_arguments(int argc, char *argv[], bool init) {
+
+	int i = 0;
 	char *file = 0;
-	int width = 0, height = 0, i = 0;
-	bool dialog = false;
 
-    ghtml_app_name = argv[0];
-
-    gtk_init(&argc, &argv);
-
-	ghtml_webview_load_statements = charbuffer_from_void();
+	if (ghtml_xargs_require_file) {
+		if (argv[++i]) {
+            file = argv[i];
+			goto delegate_control;
+		} else goto missing_required_string;
+	}
 
     if (argc > 1) {
         while (++i < argc) {
@@ -54,7 +58,8 @@ int main(int argc, char *argv[]) {
 
             if (g_str_equal(argv[i], "--width")) {
 				if (argv[i + 1]) {
-	                if ( ! sscanf(argv[++i], "%i", &width)) goto missing_required_integer;
+	                if ( ! sscanf(argv[++i], "%i", &ghtml_webview_width)) 
+						goto missing_required_integer;
 					continue;							
 				} else {
 					goto missing_required_integer;
@@ -62,7 +67,8 @@ int main(int argc, char *argv[]) {
             }
             if (g_str_equal(argv[i], "--height")) {
 				if (argv[i + 1]) {
-	                if ( ! sscanf(argv[++i], "%i", &height)) goto missing_required_integer;
+	                if ( ! sscanf(argv[++i], "%i", &ghtml_webview_height)) 
+						goto missing_required_integer;
 					continue;
 				} else {
 					goto missing_required_integer;
@@ -79,12 +85,13 @@ int main(int argc, char *argv[]) {
             if (g_str_equal(argv[i], "--file") || g_str_equal(argv[i], "-f")) {
 				if (argv[i + 1]) {
 	                file = argv[++i];
-					continue;
+					puts(file);
+					goto delegate_control;
 				} else {
 					goto missing_required_string;
 				}
             }
-            if (g_str_equal(argv[i], "--mime-type") || g_str_equal(argv[i], "-m")) {
+            if (g_str_equal(argv[i], "--mime-type")) {
 				if (argv[i + 1]) {
 	                ghtml_webview_mime_type = argv[++i];
 					continue;
@@ -92,7 +99,7 @@ int main(int argc, char *argv[]) {
 					goto missing_required_string;
 				}
             }
-            if (g_str_equal(argv[i], "--encoding") || g_str_equal(argv[i], "-E")) {
+            if (g_str_equal(argv[i], "--charset")) {
 				if (argv[i + 1]) {
 	                ghtml_webview_document_encoding = argv[++i];
 					continue;
@@ -101,12 +108,14 @@ int main(int argc, char *argv[]) {
 				}
             }
             if (g_str_equal(argv[i], "--dialog") || g_str_equal(argv[i], "-d")) {
-                dialog = true;
+                ghtml_webview_dialog = true;
                 continue;
             }
             if (g_str_equal(argv[i], "--on-load") || g_str_equal(argv[i], "-o")) {
 				if (argv[i + 1]) {
-	               	charbuffer_write_format(ghtml_webview_load_statements, "%s\n", argv[++i]);
+	               	charbuffer_write_format(
+						ghtml_webview_load_statements, "%s\n", argv[++i]
+					);
 					continue;
 				} else {
 					goto missing_required_string;
@@ -144,30 +153,32 @@ int main(int argc, char *argv[]) {
 					if (item == 'f') {
 						if (! *(combo + 1) && argv[i + 1]) {
 						    file = argv[++i];
-						    break;			                						
+						    goto delegate_control;		                						
 						} else {
 							goto missing_required_string;
 						}
 					}
-					if (item == 'm') {
-						if (! *(combo + 1) && argv[i + 1]) {
-						    ghtml_webview_mime_type = argv[++i];
-						    break;			                						
-						} else {
-							goto missing_required_string;
-						}
-					}
-					if (item == 'f') {
-						if (! *(combo + 1) && argv[i + 1]) {
-						    ghtml_webview_document_encoding = argv[++i];
-						    break;			                						
-						} else {
-							goto missing_required_string;
-						}
-					}
+/*					if (item == 'm') {*/
+/*						if (! *(combo + 1) && argv[i + 1]) {*/
+/*						    ghtml_webview_mime_type = argv[++i];*/
+/*						    break;			                						*/
+/*						} else {*/
+/*							goto missing_required_string;*/
+/*						}*/
+/*					}*/
+/*					if (item == 'E') {*/
+/*						if (! *(combo + 1) && argv[i + 1]) {*/
+/*						    ghtml_webview_document_encoding = argv[++i];*/
+/*						    break;			                						*/
+/*						} else {*/
+/*							goto missing_required_string;*/
+/*						}*/
+/*					}*/
 					if (item == 'o') {
 						if (! *(combo + 1) && argv[i + 1]) {
-			               	charbuffer_write_format(ghtml_webview_load_statements, "%s\n", argv[++i]);
+			               	charbuffer_write_format(
+								ghtml_webview_load_statements, "%s\n", argv[++i]
+							);
 						    break;			                						
 						} else {
 							goto missing_required_string;
@@ -182,7 +193,7 @@ int main(int argc, char *argv[]) {
 						}
 					}
 					if (item == 'd') {
-						dialog = true;
+						ghtml_webview_dialog = true;
 						continue;
 					}
 					if (item == 'e') {
@@ -204,32 +215,72 @@ int main(int argc, char *argv[]) {
 	    ghtml_app_argc = (argc - i);
 		ghtml_app_argv = argv + i;
 
-		//printf("First Script Argument: %s\n", ghtml_app_argv[0]);
-		//printf("Argument Count: %i\n", ghtml_app_argc);
-
 	}
 
 	ghtml_app_file = file;
 
-	ghtml_window_initialize(width, height, dialog, file);
-	
-	gtk_main();
+	if (init) {
+		ghtml_window_initialize(ghtml_webview_width, ghtml_webview_height, ghtml_webview_dialog);
+		gtk_main();
+	}
 
-	g_free (ghtml_webview_seed);
-
-	jump_ship:  
-    return EXIT_SUCCESS;
+jump_ship:
+	return 1;
 
 missing_required_integer:
 	fprintf(stderr, 
 		"%s: error: option: %s requires integer argument\n", 
 	ghtml_app_name, argv[i]);
-    return 1;
+    exit(1);
 
 missing_required_string:
+	if (g_str_equal(argv[0], "parse:")) {
+		ghtml_xargs_require_file = true;
+		return 1;
+	}
 	fprintf(stderr, 
 		"%s: error: option: %s requires string argument\n", 
 	ghtml_app_name, argv[i]);
-    return 1;
+    exit(1);
+
+delegate_control:
+
+    ghtml_app_argc = (argc - ++i);
+	ghtml_app_argv = argv + i;
+
+	ghtml_app_file = file;
+	if (init) {
+		ghtml_window_initialize(ghtml_webview_width, ghtml_webview_height, ghtml_webview_dialog);
+		gtk_main();
+	}
+	return 1;
+
+}
+
+int main(int argc, char *argv[]) {
+
+    ghtml_app_name = argv[0];
+
+	ghtml_webview_load_statements = charbuffer_from_void();
+
+    gtk_init(&argc, &argv);
+
+	int nargc; char **nargv;
+
+	if (argc > 1) {
+		if (g_str_has_prefix(argv[1], "parse: ") && g_shell_parse_argv(argv[1], &nargc, &nargv, NULL) && nargc > 1) {
+			parse_arguments(nargc, nargv, false);
+			g_strfreev(nargv);
+			--argc; ++argv;
+			if (argc > 1) parse_arguments(argc, argv, true);
+		} else {
+			parse_arguments(argc, argv, true);
+		}
+	}
+	
+	g_free (ghtml_webview_seed);
+
+	jump_ship:  
+    return EXIT_SUCCESS;
 
 }

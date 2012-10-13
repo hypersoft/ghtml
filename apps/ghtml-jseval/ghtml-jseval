@@ -1,0 +1,33 @@
+#!/bin/ghtml -df
+<html>
+<head><title>JavaScript ScratchPad - ghtml</title>
+<style>
+* {
+	font-size: 10pt;
+}
+
+textarea {
+	font-family: mono;
+}
+
+</style>
+<script>
+
+	function bodyOnLoad() {
+		window.resizeTo(document.width + 10, document.height);
+	}
+
+</script>
+</head>
+<body onload="bodyOnLoad();">
+<div>
+<form id=test>
+<p><b>Javascript:</b></p>
+<p><textarea id=input rows=15 cols=60></textarea></p>
+<p>
+<div style="width: 100%" align=right><button onclick="eval(test.input.value);">Evaluate</button></div>
+</p>
+</form>
+</div>
+</body>
+</html>

@@ -107,6 +107,22 @@ int parse_arguments(int argc, char *argv[], bool init) {
                 ghtml_webview_dialog = true;
                 continue;
             }
+            if (g_str_equal(argv[i], "--96dpi")) {
+                ghtml_webview_96dpi = true;
+                continue;
+            }
+            if (g_str_equal(argv[i], "--no-geo")) {
+                ghtml_webview_geolocation = false;
+                continue;
+            }
+            if (g_str_equal(argv[i], "--user-agent")) {
+				if (argv[i + 1]) {
+	                ghtml_webview_user_agent = argv[++i];
+					continue;
+				} else {
+					goto missing_required_string;
+				}
+            }
             if (g_str_equal(argv[i], "--on-load") || g_str_equal(argv[i], "-o")) {
 				if (argv[i + 1]) {
 	               	charbuffer_write_format(

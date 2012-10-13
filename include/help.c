@@ -99,6 +99,12 @@ void ghtml_help(char *section) {
 		printf("--width  {INTEGER} -  Set the window width\n");
 		printf("--height {INTEGER} -  Set the window height\n\n");
 
+		printf("--96dpi  - Enforce 96 dots per inch density\n");
+
+		printf("--no-geo - Deny geo-location requests\n");
+
+		printf("--user-agent {STRING} - Set user agent\n");
+
 		  puts("--title  or -t  {STRING}  -  Set the window title (if not supplied");
 		  puts("                             document title is used.)\n");
 

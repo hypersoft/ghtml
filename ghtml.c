@@ -35,10 +35,6 @@
 
 #include "include/help.c"
 
-bool ghtml_xargs_require_file = false;
-int ghtml_webview_width = 0, ghtml_webview_height = 0;
-bool ghtml_webview_dialog = false;
-
 int parse_arguments(int argc, char *argv[], bool init) {
 
 	int i = 0;

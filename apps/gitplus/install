@@ -2,8 +2,8 @@
 
 # YEAHHH!
 
-this=$0;
-localPath=${this%/*};
+this="$0;"
+localPath="${this%/*}";
 
 cp -vt /usr/bin "${localPath}/gcommit";
 

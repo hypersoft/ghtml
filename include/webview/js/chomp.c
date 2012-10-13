@@ -16,21 +16,29 @@
 
 */
 
-SeedValue ghtml_webview_js_console_error (SeedContext ctx, SeedObject function, SeedObject thisObject, size_t argumentCount, SeedValue arguments[], SeedException * exception) {
+SeedValue ghtml_webview_js_chomp (SeedContext ctx, SeedObject function, SeedObject thisObject, size_t argumentCount, SeedValue arguments[], SeedException * exception) {
 
-	if (argumentCount != 1){
+	if (argumentCount != 1) {
 		seed_make_exception (ctx, exception, GHTML_JS_INVALID_PARAMS,
-			"console.error expected 1 argument, got %zd", argumentCount
+			"chomp expected 1 argument, got %zd", argumentCount
 		);  return seed_make_null (ctx);
 	}
 
-	gchar * buf = seed_value_to_string (ctx, arguments[0], exception);
+	gchar * val = g_strchomp(seed_value_to_string(ctx, arguments[0], exception));
 
-	fprintf(stderr, "%s", buf);
+	if (! val) {
+		return seed_make_undefined(ctx);
+	}
 
-	g_free (buf);
+	void * jsTemp;
 
-	return seed_make_null (ctx);
+	SeedValue result = (SeedValue)JSValueMakeString(ctx,
+		jsTemp = JSStringCreateWithUTF8CString(val)
+	);  JSStringRelease(jsTemp);
+
+	g_free(val);
+ 
+	return result;
 
 }
 

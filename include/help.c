@@ -20,7 +20,7 @@ char *GHTML_HELP_SECTION_MAIN 				= "--help";
 char *GHTML_HELP_SECTION_VERSION 			= "--help-version";
 char *GHTML_HELP_SECTION_JS 				= "--help-js";
 
-void ghtml_print_help(char *section) {
+void ghtml_help(char *section) {
 
 	if (g_str_equal(section, GHTML_HELP_SECTION_VERSION)) {
 
@@ -28,7 +28,7 @@ void ghtml_print_help(char *section) {
 
 		  puts("Author: Triston J. Taylor 2012 (pc.wiz.tt@gmail.com)\n");
 
-		  puts("Version: 0.72");
+		  puts("Version: 0.74");
 		  puts("License: GPL Version 3");
 		  puts("Toolkit: WebKitGTK+ 1.8.1\n");
 
@@ -49,6 +49,7 @@ void ghtml_print_help(char *section) {
 
 		  puts("  exec(string)    -   capture stdout, stderr and status of command");
 		  puts("  puts(string)    -   print line terminated data on console");
+		  puts("  chomp(string)   -   remove trailing whitespace from string");
 		  puts("  quit(number)    -   quit program with exit status\n");
 
 		  puts("-\n");
@@ -57,7 +58,6 @@ void ghtml_print_help(char *section) {
 
 		  puts("  console.exec(string)   -  capture execution status of command");
 		  puts("  console.print(string)  -  write raw string to stdout");
-		  puts("  console.write(string)  -  write line terminated string to stdout");
 		  puts("  console.error(string)  -  write raw string to stderr\n");
 
 		  puts("-\n");

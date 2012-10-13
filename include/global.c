@@ -23,13 +23,16 @@ char **ghtml_app_argv;
 
 char *ghtml_app_title = 0;
 char *ghtml_app_directory = 0;
+char *ghtml_app_file = 0;
+
 void *ghtml_window = 0; /* GtkWidget */
 void *ghtml_window_scrollable_content_area = 0; /* GtkWidget */
 
 void *ghtml_webview = 0; /* WebKitWebView */
 
 void *ghtml_webview_main_frame = 0;
-void *ghtml_webview_global_context = 0;
+void *ghtml_webview_main_global_object = 0;
+
 void *ghtml_webview_mime_type = NULL;
 void *ghtml_webview_document_encoding = NULL;
 

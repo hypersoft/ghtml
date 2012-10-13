@@ -29,11 +29,11 @@
 
 #include "include/global.c"
 
-#include "include/help.c"
-
 #include "include/webview.c"
 
 #include "include/window.c"
+
+#include "include/help.c"
 
 int main(int argc, char *argv[]) {
 
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
                 continue;
             }
             if (g_str_has_prefix(argv[i], "--help")) {
-                ghtml_print_help(argv[i]);
+                ghtml_help(argv[i]);
 				goto jump_ship;
                 break;
             }
@@ -208,6 +208,8 @@ int main(int argc, char *argv[]) {
 		//printf("Argument Count: %i\n", ghtml_app_argc);
 
 	}
+
+	ghtml_app_file = file;
 
 	ghtml_window_initialize(width, height, dialog, file);
 	

@@ -16,21 +16,24 @@
 
 */
 
-SeedValue ghtml_webview_js_console_error (SeedContext ctx, SeedObject function, SeedObject thisObject, size_t argumentCount, SeedValue arguments[], SeedException * exception) {
+const char * GHTML_JS_INVALID_PARAMS = "invalid parameters"; 
 
-	if (argumentCount != 1){
-		seed_make_exception (ctx, exception, GHTML_JS_INVALID_PARAMS,
-			"console.error expected 1 argument, got %zd", argumentCount
-		);  return seed_make_null (ctx);
-	}
+#include "js/native.c"
 
-	gchar * buf = seed_value_to_string (ctx, arguments[0], exception);
+#include "js/chomp.c"
+#include "js/exec.c"
+#include "js/quit.c"
+#include "js/puts.c"
+#include "js/chdir.c"
 
-	fprintf(stderr, "%s", buf);
+#include "js/getenv.c"
+#include "js/setenv.c"
+#include "js/delenv.c"
 
-	g_free (buf);
+#include "js/console/exec.c"
+#include "js/console/error.c"
+#include "js/console/print.c"
+#include "js/console/arguments.c"
 
-	return seed_make_null (ctx);
-
-}
+#include "js/init.c"
 

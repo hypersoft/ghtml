@@ -16,21 +16,3 @@
 
 */
 
-SeedValue ghtml_webview_js_console_error (SeedContext ctx, SeedObject function, SeedObject thisObject, size_t argumentCount, SeedValue arguments[], SeedException * exception) {
-
-	if (argumentCount != 1){
-		seed_make_exception (ctx, exception, GHTML_JS_INVALID_PARAMS,
-			"console.error expected 1 argument, got %zd", argumentCount
-		);  return seed_make_null (ctx);
-	}
-
-	gchar * buf = seed_value_to_string (ctx, arguments[0], exception);
-
-	fprintf(stderr, "%s", buf);
-
-	g_free (buf);
-
-	return seed_make_null (ctx);
-
-}
-

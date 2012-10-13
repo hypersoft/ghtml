@@ -24,7 +24,11 @@ if (init.status) {
 	quit(1);
 }
 
-chdir(exec("git rev-parse --show-cdup").stdout.replace(/\n$/, ""));
+chdir(
+	chomp(
+		exec("git rev-parse --show-cdup").stdout
+	)
+);
 
 path = exec("pwd").stdout;
 
@@ -36,9 +40,8 @@ if (status.length == 0) {
 }
 
 var branch_info = exec("git branch");
-var currentBranch = gitCurrentBranch();
 
-document.title += ": " + currentBranch;
+document.title += ": " + gitCurrentBranch();
 
 var modifications = status.split(/\n/);
 var W, H;
@@ -203,10 +206,12 @@ window.addEventListener("keyup",keyup,false);
 
 function describeStatusLine(line) {
 
-	  result = line.replace(/^ D /, 'Deleted ');
-	result = result.replace(/^R  /, 'Renamed ');
-	result = result.replace(/^A  /, 'Added ');
-	result = result.replace(/^ M /, 'Modified ');
+	  result = line.replace(/^ D /, 'Deleted: ');
+	result = result.replace(/^R  /, 'Renamed: ');
+	result = result.replace(/^A  /, 'Added: ');
+	result = result.replace(/^AM /, 'Added, Modified: ');
+	result = result.replace(/^ M /, 'Modified: ');
+	result = result.replace(/^M  /, '* Modified: ');
 
 	return result + "\n";
 

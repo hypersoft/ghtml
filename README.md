@@ -1,7 +1,7 @@
 ghtml
 =====
 
-*The Graphical HTML Windowing Toolkit*
+*The GTK+ HTML Windowing Toolkit*
 
 It features its own lightweight build configuration system using **bash** and **pkg-config** as 
 its "special" runtime requirements. The configuration system also makes it extremely 

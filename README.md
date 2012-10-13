@@ -37,4 +37,4 @@ based on **local content trust**, and **local user access rights**.
 Anouncements
 ============
 
-HOLD UP: Webkit & Gnome's G Series do not seem to be up to the task at hand. Its taking serious involvement with runtime code for lack of adequately descriptive documentation contracts. Please use this software at your discretion, it is bleeding edge, and most likely bleeding memory with system calls like exec. Some values needed by scripts may also be garbage collected prematurely as there are no adequate examples or complete refrence points I know of to follow. The current master branch should be useful enough to read environment variables, into items like textboxes who have a set property that is not a refrence to the source, and print things out to the console without issues. We have not had much time to test the seed extensions, but it is likely that would currently be a better option if you are brave enough for the quest. Had GTK+ message dialogs up from within Toolkit the other day... d8d3969bcfa3f63ecd27caa532af0c8033cd61bc
+Ready and waiting.

@@ -28,6 +28,8 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 
 		ghtml_webview_main_global_object = JSContextGetGlobalObject(thisContext);
 
+		seed_simple_evaluate(thisContext, "imports.gi.Gtk; imports.gi.Gst; imports.gi.Gio;", NULL);
+
 		ghtml_webview_js_native( thisContext, ghtml_webview_main_global_object, "quit",
 			ghtml_webview_js_quit, NULL
 		);

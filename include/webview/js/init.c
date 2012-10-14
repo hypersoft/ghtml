@@ -24,11 +24,6 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 
 		ghtml_webview_seed = seed_init_with_context (NULL, NULL, thisContext);
 
-		seed_simple_evaluate(ghtml_webview_seed,
-			"gtk = imports.gi.Gtk; delete gtk; glib = imports.gi.GLib; delete glib;",
-			NULL
-		);
-
 		ghtml_webview_main_frame = thisFrame;
 
 		ghtml_webview_main_global_object = JSContextGetGlobalObject(thisContext);

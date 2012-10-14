@@ -99,6 +99,18 @@ void ghtml_webview_window_cleared(WebKitWebView *webkitwebview, WebKitWebFrame *
 	ghtml_webview_js_init(context, frame);
 }
 
+
+gboolean ghtml_webview_geo_location_request (WebKitWebView * web_view, WebKitWebFrame *frame, WebKitGeolocationPolicyDecision *policy_decision, gpointer user_data) {
+	if (ghtml_webview_geolocation) {
+		webkit_geolocation_policy_allow(policy_decision);
+	} else {
+		g_object_ref(policy_decision);
+		webkit_geolocation_policy_deny(policy_decision);
+	}
+	return true;
+}
+
+
 void ghtml_webview_initialize(void *this_container, void *this_file, bool as_transparent) {
 
 	WebKitWebSettings *these_settings = webkit_web_settings_new ();
@@ -113,6 +125,8 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
     g_signal_connect(ghtml_webview, "load-finished", G_CALLBACK(ghtml_webview_load_finished), NULL);
     g_signal_connect(ghtml_webview, "title-changed", G_CALLBACK(ghtml_webview_title_changed), NULL);
     g_signal_connect(ghtml_webview, "window-object-cleared", G_CALLBACK(ghtml_webview_window_cleared), NULL);
+    g_signal_connect(ghtml_webview, "geolocation-policy-decision-requested", G_CALLBACK(ghtml_webview_geo_location_request), NULL);
+
 
 	g_object_set (G_OBJECT(these_settings), "auto-resize-window", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "resizable-text-areas", FALSE, NULL);
@@ -125,8 +139,16 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	g_object_set (G_OBJECT(these_settings), "enable-universal-access-from-file-uris", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-file-access-from-file-uris", TRUE, NULL);
 
-	if (ghtml_webview_explode == true) 	g_object_set (G_OBJECT(these_settings), "enable-frame-flattening", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-accelerated-compositing", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-developer-extras", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-fullscreen", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-spell-checking", TRUE, NULL);
+
+	g_object_set (G_OBJECT(these_settings), "enforce-96-dpi", ghtml_webview_96dpi, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-frame-flattening", ghtml_webview_explode, NULL);
+
 	if (ghtml_webview_motif_uri) g_object_set (G_OBJECT(these_settings), "user-stylesheet-uri", ghtml_webview_motif_uri, NULL);
+	if (ghtml_webview_user_agent) g_object_set (G_OBJECT(these_settings), "user-agent", ghtml_webview_user_agent, NULL);
 
 	webkit_web_view_set_settings (ghtml_webview, these_settings);
 

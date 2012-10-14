@@ -102,6 +102,12 @@ void ghtml_help(char *section) {
 		  puts("                             supplied, file is stdin. content-type");
 		  puts("                             is text/html.)\n");
 
+		printf("--96dpi - Enforce 96 dots per inch density\n");
+
+		printf("--no-geo - Deny geo-location requests\n");
+
+		printf("--user-agent {STRING} - Set user agent\n");
+
 		printf("--mime-type {STRING} -  Specify document content-type\n");
 		printf("--encoding  {STRING} -  Specify document encoding\n\n");
 

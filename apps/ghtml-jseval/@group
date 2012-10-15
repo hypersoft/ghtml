@@ -27,7 +27,13 @@
 
 echo ""
 
-status=`cp -vt "$installDir" "$byGroup" 2>&- || echo -n "operation failed: " >&2;`
+test -w $installDir || {
+	echo "You don't have sufficient privileges to perform this operation."'\n';
+	exit 1;
+} >&2;
+
+status=`cp -vt "$installDir" "$byApplication" 2>&- || \
+echo -n "$this: $group: installation failed to copy: " >&2;`;
 
 echo "$status";
 

@@ -26,7 +26,7 @@ title="$1";
 
 test $# -gt 0 && { shift 1; }
  
-this="$0" localPath="${this%/*}" installHook="$localPath/$group/@installhook";
+this="$0" localPath="${this%/*}" installGroup="$localPath/$group/@group";
 installDefault="/usr/bin" installDir="${INSTALLDIR:-$installDefault}";
 
 test "$group" = --help || test "$group" = -h || test "$group" = '-?' || \
@@ -44,13 +44,13 @@ echo "If option -e is supplied, execute the title, with remaining arguments,";
 echo "instead of copying it. If title is not supplied with -e list group executables" \
 '\n';
 
-echo "If title is not supplied, execute $localPath/group/@installhook";
+echo "If title is not supplied, execute $localPath/group/@group";
 echo "if that program is not present, try to install";
 echo "$localPath/group/group and if that fails show a listing";
 echo "of all valid resources belonging to group"'\n';
 
 echo "if title is -- all following arguments are passed to ";
-echo "$localPath/group/@installhook"'\n';
+echo "$localPath/group/@group"'\n';
 
 test -w "$installDir" ||
 echo You must have sufficient privileges to perform this operation.'\n';
@@ -59,14 +59,14 @@ exit;
 
 }
 
-byTitle="$localPath/$group/$title";
-byInstallHook="$localPath/$group/@installhook";
-byGroup="$localPath/$group/$group";
+byInstallGroup="$localPath/$group/@group";
+byInstallGroupTitle="$localPath/$group/$title";
+byApplication="$localPath/$group/$group";
 
 test "$exec" = "true" && {
 
-	test -x "$byTitle" && test -n "$title"  && {
-		exec "$byTitle" "$@";
+	test -x "$byInstallGroupTitle" && test -n "$title"  && {
+		exec "$byInstallGroupTitle" "$@";
 	} || {
 		echo '\n'"Listing of executable targets for $group:"'\n'
 		(
@@ -83,14 +83,14 @@ test "$exec" = "true" && {
 }
 
 test -z "$title" || test "$title" = '--' && {
-	test -e "$byInstallHook" && { (
-		export this group title localPath installHook installDefault installDir \
-		byGroup; exec "$byInstallHook" "$@";
+	test -e "$byInstallGroup" && { (
+		export this group title localPath installGroup installDefault installDir \
+		byApplication; exec "$byInstallGroup" "$@";
 	);   exit;
 	}
-	resource="$byGroup";
+	resource="$byApplication";
 } || {
-	resource="$byTitle";
+	resource="$byInstallGroupTitle";
 }
 
 echo "";
@@ -109,7 +109,7 @@ test -w $installDir || {
 } >&2;
 
 status=`cp -vt "$installDir" "$resource" 2>&- || \
-echo -n "$this: $group: operation failed: " >&2;`;
+echo -n "$this: $group: installation failed to copy: " >&2;`;
 
 echo "$status";
 

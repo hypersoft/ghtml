@@ -29,8 +29,8 @@ echo ""
 
 test -w $installDir || {
 
-	echo "You don't have sufficient privileges to install "'\n' \
-	"\`$byApplication' to \`$installDir'"'\n';
+	echo You don\'t have sufficient privileges to'\n'"install" \
+	\'$byApplication\' \'$installDir\''\n';
 
 	exit 1;
 } >&2;

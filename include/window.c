@@ -18,10 +18,12 @@
 
 static void ghtml_window_destroy(GtkWidget* widget, GtkWidget* window){
 	gtk_main_quit();
+	return;
 }
 
 gboolean ghtml_window_escaped (GtkAccelGroup *accel_group, GObject *acceleratable, guint keyval, GdkModifierType modifier) {
 	webkit_web_view_execute_script(ghtml_webview, "window.close();");
+	return true;
 }
 
 static void ghtml_window_initialize(int width, int height, bool as_dialog, void *file) {

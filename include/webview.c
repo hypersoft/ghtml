@@ -19,12 +19,12 @@
 #include "webview/js.c"
 
 static gboolean ghtml_webview_close(WebKitWebView* this_webview, GtkWidget* this_window){
-	gtk_widget_destroy(this_window);
+	gtk_widget_destroy(this_window); gtk_main_quit();
 	return TRUE;
 }
 
 static gboolean ghtml_webview_navigation_policy_request(WebKitWebView *this_webview, WebKitWebFrame *this_frame, WebKitNetworkRequest *this_request, WebKitWebNavigationAction *this_navigation_action, WebKitWebPolicyDecision *this_policy_decision, gpointer this_user_data) {
-		webkit_web_policy_decision_ignore (this_policy_decision);
+	webkit_web_policy_decision_ignore (this_policy_decision);
 	return TRUE;
 }
 

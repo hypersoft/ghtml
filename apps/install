@@ -50,7 +50,7 @@ echo "$localPath/group/group and if that fails show a listing";
 echo "of all valid resources belonging to group"'\n';
 
 echo "if title is -- all following arguments are passed to ";
-echo "$here/$localPath/group/@installhook"'\n';
+echo "$localPath/group/@installhook"'\n';
 
 test -w "$installDir" ||
 echo You must have sufficient privileges to perform this operation.'\n';

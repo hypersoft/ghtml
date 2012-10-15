@@ -50,7 +50,7 @@ void ghtml_help(char *section) {
 		  puts("  exec(string)   Capture stdout, stderr and status of command");
 		  puts("  puts(string)   Print line terminated data on console");
 		  puts("  chomp(string)  Remove trailing whitespace from string");
-		  puts("  quit(number)   Quit program with exit status\n");
+		  puts("  quit(number)   Quit program with exit status\n\n");
 
 		  puts("Console Functions\n");
 
@@ -62,12 +62,12 @@ void ghtml_help(char *section) {
 
 		  puts("  console.arguments[]    Command line arguments not used by GTK+,");
 		  puts("                         ghtml, or seed. Specify -- to signify script");
-		  puts("                         arguments.");
+		  puts("                         arguments.\n\n");
 
 		  puts("Global Objects\n");
 
 		  puts("  Seed   \"Gnome Seed\" environment provisions");
-		  puts("  imports  \"Gnome Seed\" runtime importer\n");
+		  puts("  imports  \"Gnome Seed\" runtime importer\n\n");
 
 		  puts("JavaScript Window Mastering\n");
 

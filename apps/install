@@ -25,7 +25,7 @@ test $# -gt 0 && test "$1" = '-e' && { shift 1; exec=true; }
 test $# -gt 0 && { title="$1"; shift 1; }
 
 this="$0" localPath="${this%/*}" installHook="$localPath/$group/@installhook";
-here='.' installDefault="/usr/bin" installDir="${INSTALLDIR:-$installDefault}";
+installDefault="/usr/bin" installDir="${INSTALLDIR:-$installDefault}";
 
 test "$group" = --help || test "$group" = -h || test "$group" = '-?' || \
 test -z "$group" && {
@@ -35,16 +35,16 @@ echo '\n'USAGE: $this group [-e] [title]';\n';
 echo "DESCRIPTION: Install the application by its group name and";
 echo "title to environment variable INSTALLDIR or $installDefault"'\n';
 
-echo "group: The name of the path in $here/$localPath";
-echo "title: The name of the file in: $here/$localPath/group"'\n';
+echo "group: The name of the path in $localPath";
+echo "title: The name of the file in: $localPath/group"'\n';
 
 echo "If option -e is supplied, execute the title, with remaining arguments,";
 echo "instead of copying it. If title is not supplied with -e list group executables" \
 '\n';
 
-echo "If title is not supplied, execute $here/$localPath/group/@installhook";
+echo "If title is not supplied, execute $localPath/group/@installhook";
 echo "if that program is not present, try to install";
-echo "$here/$localPath/group/group and if that fails show a listing";
+echo "$localPath/group/group and if that fails show a listing";
 echo "of all valid resources belonging to group"'\n';
 
 echo "if title is -- all following arguments are passed to ";

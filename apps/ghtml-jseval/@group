@@ -28,7 +28,10 @@
 echo ""
 
 test -w $installDir || {
-	echo "You don't have sufficient privileges to install \`ghtml-jseval'"'\n';
+
+	echo "You don't have sufficient privileges to install "'\n' \
+	"\`$byApplication' to \`$installDir'"'\n';
+
 	exit 1;
 } >&2;
 

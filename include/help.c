@@ -42,40 +42,32 @@ void ghtml_help(char *section) {
 
 		  puts("Run Time Global Functions\n");
 
-		  puts("  getenv(name)              - get environment variable"); 
-		  puts("  setenv(name, value, bool) - set environment variable bool overwrite");
-		  puts("  delenv(string)            - delete environment variable");
-		  puts("  chdir(name)               - change current directory\n"); 
+		  puts("  getenv(name)               Get environment variable"); 
+		  puts("  setenv(name, value, bool)  Set environment variable, bool overwrite");
+		  puts("  delenv(string)             Delete environment variable");
+		  puts("  chdir(name)                Change current directory\n"); 
 
-		  puts("  exec(string)    -   capture stdout, stderr and status of command");
-		  puts("  puts(string)    -   print line terminated data on console");
-		  puts("  chomp(string)   -   remove trailing whitespace from string");
-		  puts("  quit(number)    -   quit program with exit status\n");
-
-		  puts("-\n");
+		  puts("  exec(string)   Capture stdout, stderr and status of command");
+		  puts("  puts(string)   Print line terminated data on console");
+		  puts("  chomp(string)  Remove trailing whitespace from string");
+		  puts("  quit(number)   Quit program with exit status\n");
 
 		  puts("Console Functions\n");
 
-		  puts("  console.exec(string)   -  capture execution status of command");
-		  puts("  console.print(string)  -  write raw string to stdout");
-		  puts("  console.error(string)  -  write raw string to stderr\n");
-
-		  puts("-\n");
+		  puts("  console.exec(string)   Capture execution status of command");
+		  puts("  console.print(string)  Write raw string to stdout");
+		  puts("  console.error(string)  Write raw string to stderr\n");
 
 		  puts("Console Properties\n");
 
-		  puts("  console.arguments[]    -  Command line arguments not used by GTK+,");
-		  puts("                            ghtml, or seed. Specify -- to signify script");
-		  puts("                            arguments.");
-
-		  puts("-\n");
+		  puts("  console.arguments[]    Command line arguments not used by GTK+,");
+		  puts("                         ghtml, or seed. Specify -- to signify script");
+		  puts("                         arguments.");
 
 		  puts("Global Objects\n");
 
-		  puts("  Seed          -  \"Gnome Seed\" environment provisions");
-		  puts("  imports       -  \"Gnome Seed\" runtime importer\n");
-
-		  puts("-\n");
+		  puts("  Seed   \"Gnome Seed\" environment provisions");
+		  puts("  imports  \"Gnome Seed\" runtime importer\n");
 
 		  puts("JavaScript Window Mastering\n");
 
@@ -92,38 +84,41 @@ void ghtml_help(char *section) {
 
 		printf ("Description: The Graphical HTML Windowing Toolkit\n\n");
 
-		printf("--width  {INTEGER} - Set the window width\n");
-		printf("--height {INTEGER} - Set the window height\n\n");
+		printf("--width         {INTEGER}    Set the window width\n");
+		printf("--height        {INTEGER}    Set the window height\n\n");
 
-		  puts("--title  or -t  {STRING}  -  Set the window title (if not supplied");
+		  puts("--title  or -t  {STRING}     Set the window title (if not supplied");
 		  puts("                             document title is used.)\n");
 
-		  puts("--file   or -f  {PATH}    -  Load a file into the web view (if not");
+		  puts("--file   or -f  {PATH}       Load a file into the web view (if not");
 		  puts("                             supplied, file is stdin. content-type");
 		  puts("                             is text/html.)\n");
 
-		printf("--96dpi  - Enforce 96 dots per inch density\n");
-		printf("--no-geo - Deny geo-location requests\n\n");
+		  puts("--file-opts  ...  When this flag is detected as the prefix of the");
+		  puts("                  first argument, the entire argument will be parsed");
+		  puts("                  as a command line, and the next argument is expected\n");
+		  puts("                  to be a file to interpret.");
 
-		printf("--user-agent {STRING} - Set user agent\n");
-		printf("--mime-type  {STRING} - Specify document content-type\n");
-		printf("--encoding   {STRING} - Specify document encoding\n\n");
+		  puts("--style-sheet  or -s {URI}     Specify base motif URI\n");
+		printf("--user-agent         {STRING}  Set user agent\n");
+		printf("--mime-type    or -m {STRING}  Specify document content-type\n");
+		printf("--encoding     or -E {STRING}  Specify document encoding\n\n");
 
-		  puts("--style-sheet or -s {URI} - specify base motif URI\n");
+		  puts("--dialog   or -d  Use GTK+ Dialog decoration");
+		  puts("--explode  or -e  Activate embedded device quirks");
+		  puts("--96dpi           Enforce 96 dots per inch density");
+		  puts("--no-geo          Deny geo-location requests\n");
 
-		  puts("--onload  or -o  {STATEMENTS} -\n");
+		  puts("--onload   or -o  {STATEMENTS}\n");
 
 		  puts("  Run javascript statements onload.\n");
 
 		  puts("  You may issue multiple instances of this directive. These statements");
 		  puts("  are executed when the webview has finished loading.\n");
 
-		  puts("--dialog  or -d  -  Use GTK+ Dialog decoration");
-		  puts("--explode or -e  -  Activate embedded device quirks\n");
-
-		  puts("--help           -  Show this help screen");
-		  puts("--help-version   -  Show version info help screen");
-		  puts("--help-js        -  Show javascript help screen\n");
+		  puts("--help           Show this help screen");
+		  puts("--help-version   Show version info help screen");
+		  puts("--help-js        Show javascript help screen\n");
 
 		return;
 

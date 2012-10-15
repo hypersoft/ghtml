@@ -35,17 +35,10 @@
 
 #include "include/help.c"
 
-int main(int argc, char *argv[]) {
+int parse_options(int argc, char * argv[], char * subopt) {
 
-	char *file = 0;
-	int width = 0, height = 0, i = 0;
-	bool dialog = false;
-
-    ghtml_app_name = argv[0];
-
-    gtk_init(&argc, &argv);
-
-	ghtml_webview_load_statements = charbuffer_from_void();
+	bool dialog = false; char *file = subopt;
+	int width = 0, height = 0, i = -1;
 
     if (argc > 1) {
         while (++i < argc) {
@@ -136,7 +129,7 @@ int main(int argc, char *argv[]) {
 					goto missing_required_string;
 				}
             }
-            if (g_str_equal(argv[i], "--explode-frames") || g_str_equal(argv[i], "-e")) {
+            if (g_str_equal(argv[i], "--explode") || g_str_equal(argv[i], "-e")) {
                 ghtml_webview_explode = true;
                 continue;
             }
@@ -168,6 +161,14 @@ int main(int argc, char *argv[]) {
 					if (item == 'm') {
 						if (! *(combo + 1) && argv[i + 1]) {
 						    ghtml_webview_mime_type = argv[++i];
+						    break;			                						
+						} else {
+							goto missing_required_string;
+						}
+					}
+					if (item == 'E') {
+						if (! *(combo + 1) && argv[i + 1]) {
+						    ghtml_webview_document_encoding = argv[++i];
 						    break;			                						
 						} else {
 							goto missing_required_string;
@@ -217,24 +218,20 @@ int main(int argc, char *argv[]) {
 
         }
 
-	    ghtml_app_argc = (argc - i);
-		ghtml_app_argv = argv + i;
-
+		if (! ghtml_app_argc) {
+			ghtml_app_argc = (argc - i);
+			ghtml_app_argv = argv + i;
+		}
 		//printf("First Script Argument: %s\n", ghtml_app_argv[0]);
 		//printf("Argument Count: %i\n", ghtml_app_argc);
 
 	}
 
 	ghtml_app_file = file;
+	ghtml_window_initialize(width, height, dialog, ghtml_app_file);	
 
-	ghtml_window_initialize(width, height, dialog, file);
-	
-	gtk_main();
-
-	g_free (ghtml_webview_seed);
-
-	jump_ship:  
-    return EXIT_SUCCESS;
+jump_ship:  
+	return 0;
 
 missing_required_integer:
 	fprintf(stderr, 
@@ -247,5 +244,39 @@ missing_required_string:
 		"%s: error: option: %s requires string argument\n", 
 	ghtml_app_name, argv[i]);
     return 1;
+
+}
+
+int main(int argc, char *argv[]) {
+
+    ghtml_app_name = argv[0];
+
+    gtk_init(0, NULL);
+
+	argc--; argv++;
+
+	ghtml_webview_load_statements = charbuffer_from_void();
+
+	if (argc) {
+		if (g_str_has_prefix(argv[0], "--file-opts ") && argv[1]) {
+			char **opts = 0, *file = argv[1]; int optc = 0;
+			if (g_shell_parse_argv(argv[0], &optc, &opts, NULL)) {
+				argc -= 2; argv += 2;
+				ghtml_app_argc = argc; ghtml_app_argv = argv;
+				parse_options(optc - 1, opts + 1, file);
+				gtk_main();
+				g_strfreev(opts);
+			}
+		} else {
+			parse_options(argc, argv, NULL);
+			gtk_main();
+		}
+	} else {
+		ghtml_window_initialize(0, 0, false, NULL);	
+		gtk_main();
+	}
+
+	if (ghtml_webview_seed) g_free (ghtml_webview_seed);
+    return EXIT_SUCCESS;
 
 }

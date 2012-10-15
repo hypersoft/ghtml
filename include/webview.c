@@ -35,7 +35,13 @@ static void ghtml_webview_title_changed(WebKitWebView *this_webview, WebKitWebFr
 }
 
 static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, WebKitWebFrame *this_frame, gpointer this_user_data) {
+
+	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
+	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));
+    gtk_widget_show_all(ghtml_window);
+
 	return;
+
 }
 
 static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebFrame *this_frame, gpointer this_user_data) {
@@ -43,16 +49,9 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
     g_signal_connect (G_OBJECT (this_webview), "navigation-policy-decision-requested",
     (void *) ghtml_webview_navigation_policy_request, NULL);
 
-    g_signal_connect (G_OBJECT (this_webview), "document-load-finished",
-    (void *) ghtml_webview_document_load_finished, NULL);
 
 	if (ghtml_webview_load_statements->index) webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
 	charbuffer_free(ghtml_webview_load_statements);
-
-	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));
-
-    // Make sure the main window and all its contents are visible
-    gtk_widget_show_all(ghtml_window);
 
 }
 
@@ -126,6 +125,8 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
     g_signal_connect(ghtml_webview, "title-changed", G_CALLBACK(ghtml_webview_title_changed), NULL);
     g_signal_connect(ghtml_webview, "window-object-cleared", G_CALLBACK(ghtml_webview_window_cleared), NULL);
     g_signal_connect(ghtml_webview, "geolocation-policy-decision-requested", G_CALLBACK(ghtml_webview_geo_location_request), NULL);
+    g_signal_connect (G_OBJECT (ghtml_webview), "document-load-finished",
+    (void *) ghtml_webview_document_load_finished, NULL);
 
 
 	g_object_set (G_OBJECT(these_settings), "auto-resize-window", TRUE, NULL);
@@ -151,8 +152,6 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	if (ghtml_webview_user_agent) g_object_set (G_OBJECT(these_settings), "user-agent", ghtml_webview_user_agent, NULL);
 
 	webkit_web_view_set_settings (ghtml_webview, these_settings);
-
-    gtk_widget_show(ghtml_window);
 
 	ghtml_webview_load(this_file);
 

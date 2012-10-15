@@ -44,7 +44,7 @@ static void ghtml_window_initialize(int width, int height, bool as_dialog, void 
 
 	gtk_window_set_default_size(ghtml_window, width, height);
 
-	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
+	//gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
 
 	gtk_widget_set_visual(ghtml_window_scrollable_content_area, this_compositing);
 

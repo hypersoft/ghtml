@@ -26,34 +26,40 @@ title="$1";
 
 test $# -gt 0 && { shift 1; }
  
-this="$0" localPath="${this%/*}" installGroup="$localPath/$group/@group";
-installDefault="/usr/bin" installDir="${INSTALLDIR:-$installDefault}";
+this="$0";
+localPath="${this%/*}";
+installDefault="/usr/bin";
+installDir="${INSTALLDIR:-$installDefault}";
 
 test "$group" = --help || test "$group" = -h || test "$group" = '-?' || \
-test -z "$group" && {
+	test -z "$group" && {
 
-echo '\n'USAGE: $this group [-e] [title]';\n';
-
-echo "DESCRIPTION: Install the application by its group name and";
-echo "title to environment variable INSTALLDIR or $installDefault"'\n';
-
-echo "group: The name of the path in $localPath";
-echo "title: The name of the file in: $localPath/group"'\n';
-
-echo "If option -e is supplied, execute the title, with remaining arguments,";
-echo "instead of copying it. If title is not supplied with -e list group executables" \
-'\n';
-
-echo "If title is not supplied, execute $localPath/group/@group";
-echo "if that program is not present, try to install";
-echo "$localPath/group/group and if that fails show a listing";
-echo "of all valid resources belonging to group"'\n';
-
-echo "if title is -- all following arguments are passed to ";
-echo "$localPath/group/@group"'\n';
+echo '\n' \
+USAGE: $this [GROUP] [-e] [TITLE]';\n\n' \
+\
+DESCRIPTION: Install the application by its GROUP name and'\n' \
+TITLE to environment variable INSTALLDIR or $installDefault'\n\n' \
+\
+GROUP: The name of the path in: $localPath'\n' \
+TITLE: The name of the 'file' in: $localPath/GROUP'\n\n' \
+\
+If option -e is supplied, execute $localPath/GROUP/TITLE'\n' \
+with remaining arguments. If TITLE is not supplied with -e,'\n' \
+list all executables 'in' $localPath/GROUP'\n\n' \
+\
+If TITLE is not supplied, execute $localPath/GROUP/@group'\n' \
+'if' that program is not present, try to'\n' \
+'install' \'$localPath/GROUP/GROUP\' \'$installDir\''\n' \
+and 'if' that fails show a listing of all valid resources in'\n' \
+$localPath/GROUP'\n\n' \
+\
+'if' TITLE is -- all following arguments are passed to'\n' \
+$localPath/GROUP/@group'\n';
 
 test -w "$installDir" ||
 echo You must have sufficient privileges to perform this operation.'\n';
+
+test -n $1;
 
 exit;
 
@@ -76,7 +82,7 @@ test "$exec" = "true" && {
 					echo "$file";
 				}
 			done
-			test "$haveTargets" = "true" || echo NO TARGETS AVAILABLE FOR GROUP;
+			test "$haveTargets" = "true" || echo no targets available 'for' $group.;
 		);  echo ""; 
 	};  exit;
 
@@ -84,8 +90,8 @@ test "$exec" = "true" && {
 
 test -z "$title" || test "$title" = '--' && {
 	test -e "$byInstallGroup" && { (
-		export this group title localPath installGroup installDefault installDir \
-		byApplication; exec "$byInstallGroup" "$@";
+		export this group title localPath installDefault installDir \
+		byApplication byInstallGroup; exec "$byInstallGroup" "$@";
 	);   exit;
 	}
 	resource="$byApplication";
@@ -94,17 +100,25 @@ test -z "$title" || test "$title" = '--' && {
 }
 
 echo "";
+
 test ! -e "$resource" && {
-	(   cd "$localPath/$group";
-		echo "Listing of resources in $group:"'\n';
-		list=`echo -n *`
-		test -z "$list" && echo NO RESOURCES AVAILABLE FOR GROUP'\n' || echo \
-		"$list"'\n'
+	(   cd "$localPath/$group" 2>&- && {
+
+		echo "Listing of resources in $group:"'\n'; list=`echo -n *`;
+
+	}
+		test -z "$list" || test "$list" = '*' && {
+			echo no resources available 'for' $group.'\n';
+		} || echo "$list"'\n';
+
 	);  exit 1;
 }
 
-test -w $installDir || {
-	echo "You don't have sufficient privileges to perform this operation."'\n';
+test -w "$installDir" || {
+
+	echo You don\'t have sufficient privileges to'\n'"install" \
+	\'$resource\' \'$installDir\''\n';
+
 	exit 1;
 } >&2;
 

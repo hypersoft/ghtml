@@ -21,6 +21,7 @@ SeedValue ghtml_webview_js_quit (SeedContext ctx, SeedObject function, SeedObjec
 
 	if (argumentCount == 1) {
 
+		gtk_main_quit();
 		exit(seed_value_to_int(ctx, arguments[0], exception));
 
 	} else if (argumentCount > 1) {
@@ -31,6 +32,7 @@ SeedValue ghtml_webview_js_quit (SeedContext ctx, SeedObject function, SeedObjec
 
 	}
 
+	gtk_main_quit();
 	exit (EXIT_SUCCESS);
 
 }

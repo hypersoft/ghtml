@@ -18,8 +18,8 @@
 
 char *ghtml_app_name = 0;
 
-int   ghtml_app_argc;
-char **ghtml_app_argv;
+int   ghtml_app_argc = 0;
+char **ghtml_app_argv = 0;
 
 char *ghtml_app_title = 0;
 char *ghtml_app_directory = 0;

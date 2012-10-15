@@ -18,26 +18,25 @@
 
 void ghtml_webview_js_console_arguments (void * environment, void * console, int argc, char * argv[]) {
 
-	argc++;
-
-	void *jsArgData[argc], *jsTemp;
+	void *jsArgData[argc + 1], *jsTemp;
+	void **jsUsrArgs = (jsArgData + 1);
 
 	int i = 0; 
 
 	// Set the "application path" argument.
-	jsArgData[i] = (void *) JSValueMakeString(
+	jsArgData[0] = (void *) JSValueMakeString(
 		environment, jsTemp = JSStringCreateWithUTF8CString(ghtml_app_file)
 	);  JSStringRelease(jsTemp);
 
 	// Set remaining arguments
-	for (i = 0; i < argc; i++) {
-		jsArgData[i+1] = (void *) JSValueMakeString(
+	for (i = 0; i < argc ; i++) {
+		jsUsrArgs[i] = (void *) JSValueMakeString(
 			environment, jsTemp = JSStringCreateWithUTF8CString(argv[i])
 		);  JSStringRelease(jsTemp);
 	}
 
 	void *jsarguments = seed_make_array(
-		environment, jsArgData, argc, NULL
+		environment, jsArgData, argc + 1, NULL
 	);
 
 	JSObjectSetProperty(

@@ -17,7 +17,6 @@
 */
 
 static void ghtml_window_destroy(GtkWidget* widget, GtkWidget* window){
-	webkit_web_view_execute_script(ghtml_webview, "window.close();");
 	gtk_main_quit();
 }
 

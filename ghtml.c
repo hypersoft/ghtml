@@ -40,7 +40,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 	bool dialog = false; char *file = subopt;
 	int width = 0, height = 0, i = -1;
 
-    if (argc > 1) {
+    if (argc >= 1) {
         while (++i < argc) {
 
 			if (g_str_equal(argv[i], "--")) break;
@@ -135,7 +135,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
             }
             if (g_str_has_prefix(argv[i], "--help")) {
                 ghtml_help(argv[i]);
-				goto jump_ship;
+				exit(0);
                 break;
             }
 

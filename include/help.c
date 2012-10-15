@@ -96,8 +96,8 @@ void ghtml_help(char *section) {
 
 		  puts("--file-opts  ...  When this flag is detected as the prefix of the");
 		  puts("                  first argument, the entire argument will be parsed");
-		  puts("                  as a command line, and the next argument is expected\n");
-		  puts("                  to be a file to interpret.");
+		  puts("                  as a command line, and the next argument is expected");
+		  puts("                  to be a file to interpret.\n");
 
 		  puts("--style-sheet  or -s {URI}     Specify base motif URI\n");
 		printf("--user-agent         {STRING}  Set user agent\n");

@@ -42,10 +42,10 @@ void ghtml_help(char *section) {
 
 		  puts("Run Time Global Functions\n");
 
-		  puts("  getenv(name)         -   get environment variable"); 
-		  puts("  setenv(name, value)  -   set environment variable");
-		  puts("  delenv(string)       -   delete environment variable");
-		  puts("  chdir(name)          -   change current directory\n"); 
+		  puts("  getenv(name)              - get environment variable"); 
+		  puts("  setenv(name, value, bool) - set environment variable bool overwrite");
+		  puts("  delenv(string)            - delete environment variable");
+		  puts("  chdir(name)               - change current directory\n"); 
 
 		  puts("  exec(string)    -   capture stdout, stderr and status of command");
 		  puts("  puts(string)    -   print line terminated data on console");
@@ -92,8 +92,8 @@ void ghtml_help(char *section) {
 
 		printf ("Description: The Graphical HTML Windowing Toolkit\n\n");
 
-		printf("--width  {INTEGER} -  Set the window width\n");
-		printf("--height {INTEGER} -  Set the window height\n\n");
+		printf("--width  {INTEGER} - Set the window width\n");
+		printf("--height {INTEGER} - Set the window height\n\n");
 
 		  puts("--title  or -t  {STRING}  -  Set the window title (if not supplied");
 		  puts("                             document title is used.)\n");
@@ -102,16 +102,14 @@ void ghtml_help(char *section) {
 		  puts("                             supplied, file is stdin. content-type");
 		  puts("                             is text/html.)\n");
 
-		printf("--96dpi - Enforce 96 dots per inch density\n");
-
-		printf("--no-geo - Deny geo-location requests\n");
+		printf("--96dpi  - Enforce 96 dots per inch density\n");
+		printf("--no-geo - Deny geo-location requests\n\n");
 
 		printf("--user-agent {STRING} - Set user agent\n");
+		printf("--mime-type  {STRING} - Specify document content-type\n");
+		printf("--encoding   {STRING} - Specify document encoding\n\n");
 
-		printf("--mime-type {STRING} -  Specify document content-type\n");
-		printf("--encoding  {STRING} -  Specify document encoding\n\n");
-
-		  puts("--style-sheet or -s {URI} -  specify base motif URI\n");
+		  puts("--style-sheet or -s {URI} - specify base motif URI\n");
 
 		  puts("--onload  or -o  {STATEMENTS} -\n");
 

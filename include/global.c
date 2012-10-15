@@ -41,7 +41,7 @@ bool ghtml_webview_explode = false;
 
 charbuffer *ghtml_webview_load_statements = 0;
 
-SeedEngine *ghtml_webview_seed;
+SeedEngine *ghtml_webview_seed = 0;
 
 bool ghtml_xargs_require_file = false;
 int ghtml_webview_width = 0, ghtml_webview_height = 0;

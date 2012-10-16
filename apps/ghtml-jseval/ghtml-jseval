@@ -15,6 +15,7 @@ textarea {
 
 	function bodyOnLoad() {
 		window.resizeTo(document.width + 10, document.height);
+		input.focus();
 	}
 
 </script>

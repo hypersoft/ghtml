@@ -17,6 +17,7 @@
 */
 
 #include "webview/js.c"
+#include "webview/webinspector.c"
 
 static gboolean ghtml_webview_close(WebKitWebView* this_webview, GtkWidget* this_window){
 	gtk_widget_destroy(this_window); 
@@ -152,8 +153,9 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	if (ghtml_webview_user_agent) g_object_set (G_OBJECT(these_settings), "user-agent", ghtml_webview_user_agent, NULL);
 
 	webkit_web_view_set_settings (ghtml_webview, these_settings);
-
 	ghtml_webview_load(this_file);
+
+	ghtml_webview_inspector_init(webkit_web_view_get_inspector(ghtml_webview));
 
 }
 

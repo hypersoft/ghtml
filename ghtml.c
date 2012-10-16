@@ -52,7 +52,7 @@ void ghtml_check_required_file(char *type, char *file, bool checkExec) {
 	/* Test if file is directory */
 	if (g_file_test(file, G_FILE_TEST_IS_DIR)) {
 		g_print (
-			"%s: error: `%s' is not a %s file, it is a directory\n", 
+			"%s: error: `%s' is not a %s, it is a directory\n", 
 			ghtml_app_name, file, type
 		);
 		exit(1);

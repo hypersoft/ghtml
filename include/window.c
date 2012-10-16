@@ -17,6 +17,8 @@
 */
 
 static void ghtml_window_destroy(GtkWidget* widget, GtkWidget* window){
+	seed_simple_evaluate(ghtml_webview_main_context, "window.close()", NULL);
+	gtk_widget_destroy(ghtml_window);
 	gtk_main_quit();
 	return;
 }

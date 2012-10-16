@@ -31,6 +31,7 @@ void *ghtml_window_scrollable_content_area = 0; /* GtkWidget */
 void *ghtml_webview = 0; /* WebKitWebView */
 
 void *ghtml_webview_main_frame = 0;
+void *ghtml_webview_main_context = 0;
 void *ghtml_webview_main_global_object = 0;
 
 void *ghtml_webview_mime_type = NULL;

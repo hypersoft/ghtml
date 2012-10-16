@@ -19,7 +19,8 @@
 #include "webview/js.c"
 
 static gboolean ghtml_webview_close(WebKitWebView* this_webview, GtkWidget* this_window){
-	gtk_widget_destroy(this_window); gtk_main_quit();
+	gtk_widget_destroy(this_window); 
+	gtk_main_quit();
 	return TRUE;
 }
 

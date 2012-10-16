@@ -35,6 +35,40 @@
 
 #include "include/help.c"
 
+void ghtml_check_required_file(char *type, char *file, bool checkExec) {
+
+	/* Test if file is null */
+	if (! file || ! *file) {
+		g_print ("%s: error: %s was not specified\n", ghtml_app_name, type);
+		exit(1);
+	}
+
+	/* Test if file exists. */
+	if (!g_file_test(file, G_FILE_TEST_EXISTS)) {
+		g_print ("%s: error: %s `%s' not found\n", ghtml_app_name, type, file);
+		exit(1);
+	}
+
+	/* Test if file is directory */
+	if (g_file_test(file, G_FILE_TEST_IS_DIR)) {
+		g_print (
+			"%s: error: `%s' is not a %s file, it is a directory\n", 
+			ghtml_app_name, file, type
+		);
+		exit(1);
+	}
+
+	/* Possibly test if the file is executable */
+	if (checkExec && !g_file_test(file, G_FILE_TEST_IS_EXECUTABLE)) {
+		g_print (
+			"%s: error: `%s' is not an executable %s file.\n", 
+			ghtml_app_name, file, type
+		);
+		exit(1);
+	}
+
+}
+
 int parse_options(int argc, char * argv[], char * subopt) {
 
 	bool dialog = false; char *file = subopt;
@@ -226,6 +260,8 @@ int parse_options(int argc, char * argv[], char * subopt) {
 		//printf("Argument Count: %i\n", ghtml_app_argc);
 
 	}
+
+	if (file) ghtml_check_required_file("main file", file, false); // Might exit
 
 	ghtml_app_file = file;
 	ghtml_window_initialize(width, height, dialog, ghtml_app_file);	

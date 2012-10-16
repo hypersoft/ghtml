@@ -28,7 +28,7 @@ void ghtml_help(char *section) {
 
 		  puts("Author: Triston J. Taylor 2012 (pc.wiz.tt@gmail.com)\n");
 
-		  puts("Version: 0.82");
+		  puts("Version: 0.83");
 		  puts("License: GPL Version 3");
 		  puts("Toolkit: WebKitGTK+ 1.8.1\n");
 
@@ -44,13 +44,13 @@ void ghtml_help(char *section) {
 
 		  puts("  getenv(name)               Get environment variable"); 
 		  puts("  setenv(name, value, bool)  Set environment variable, bool overwrite");
-		  puts("  delenv(string)             Delete environment variable");
-		  puts("  chdir(name)                Change current directory\n"); 
+		  puts("  delenv(name)               Delete environment variable");
+		  puts("  chdir(path)                Change current directory\n"); 
 
 		  puts("  exec(string)   Capture stdout, stderr and status of command");
 		  puts("  puts(string)   Print line terminated data on console");
 		  puts("  chomp(string)  Remove trailing whitespace from string");
-		  puts("  quit(number)   Quit program with exit status\n\n");
+		  puts("  quit(integer)  Quit program with exit status\n");
 
 		  puts("Console Functions\n");
 
@@ -61,18 +61,18 @@ void ghtml_help(char *section) {
 		  puts("Console Properties\n");
 
 		  puts("  console.arguments[]    Command line arguments not used by GTK+,");
-		  puts("                         ghtml, or seed. Specify -- to signify script");
-		  puts("                         arguments.\n\n");
+		  puts("                         or ghtml. Specify -- to signify script");
+		  puts("                         arguments.\n");
 
 		  puts("Global Objects\n");
 
 		  puts("  Seed   \"Gnome Seed\" environment provisions");
-		  puts("  imports  \"Gnome Seed\" runtime importer\n\n");
+		  puts("  imports  \"Gnome Seed\" GObject namespace importer\n");
 
 		  puts("JavaScript Window Mastering\n");
 
-		  puts("ghtml allows JavaScript access to window frames, whenever the calling");
-		  puts("frame is from a local source.\n");
+		  puts("  Ghtml allows JavaScript access to window frames, whenever the calling");
+		  puts("  frame is from a local source.\n");
 
 		return;
 

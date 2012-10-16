@@ -52,7 +52,6 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
 
 
 	if (ghtml_webview_load_statements->index) webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
-	charbuffer_free(ghtml_webview_load_statements);
 
 }
 

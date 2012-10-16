@@ -116,6 +116,13 @@ void ghtml_help(char *section) {
 		  puts("  You may issue multiple instances of this directive. These statements");
 		  puts("  are executed when the webview has finished loading.\n");
 
+		  puts("--js-rc   or -j  {FILE}\n");
+
+		  puts("  Include JavaScript environment file.\n");
+
+		  puts("  You may issue multiple instances of this directive. These includes");
+		  puts("  are evalutated when the webview is being prepared for interactive use.\n");
+
 		  puts("--help           Show this help screen");
 		  puts("--help-version   Show version info help screen");
 		  puts("--help-js        Show javascript help screen\n");

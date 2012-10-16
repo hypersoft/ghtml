@@ -17,6 +17,7 @@
 */
 
 char *ghtml_app_name = 0;
+int ghtml_app_died = 0;
 
 int   ghtml_app_argc = 0;
 char **ghtml_app_argv = 0;
@@ -41,6 +42,7 @@ void *ghtml_webview_motif_uri = 0;
 bool ghtml_webview_explode = false;
 
 charbuffer *ghtml_webview_load_statements = 0;
+charbuffer *ghtml_webview_environment_scripts = 0;
 
 SeedEngine *ghtml_webview_seed = 0;
 

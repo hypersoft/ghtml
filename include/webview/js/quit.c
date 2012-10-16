@@ -21,19 +21,19 @@ SeedValue ghtml_webview_js_quit (SeedContext ctx, SeedObject function, SeedObjec
 
 	if (argumentCount == 1) {
 
-		gtk_main_quit();
-		exit(seed_value_to_int(ctx, arguments[0], exception));
+		ghtml_die(seed_value_to_int(ctx, arguments[0], exception));
+		return NULL;
 
 	} else if (argumentCount > 1) {
 
 		seed_make_exception( ctx, exception, GHTML_JS_INVALID_PARAMS,
 			"quit expected 1 argument, got %zd", argumentCount
 		);
+		return NULL;
 
 	}
 
-	gtk_main_quit();
-	exit (EXIT_SUCCESS);
+	ghtml_die(EXIT_SUCCESS);
 
 }
 

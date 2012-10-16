@@ -29,6 +29,25 @@
 
 #include "include/global.c"
 
+void ghtml_die(int code) {
+
+	ghtml_app_died = code;
+
+	if (ghtml_webview_main_context)
+		seed_simple_evaluate(ghtml_webview_main_context, "window.close()", NULL);
+
+	gtk_main_quit();
+
+	// if gtk was not running we need to cleanup & exit as we won't be exiting
+	// this thread after the above call.
+
+	charbuffer_free(ghtml_webview_load_statements);
+	charbuffer_free(ghtml_webview_environment_scripts);
+
+	exit(code);
+
+}
+
 #include "include/webview.c"
 
 #include "include/window.c"
@@ -39,32 +58,32 @@ void ghtml_check_required_file(char *type, char *file, bool checkExec) {
 
 	/* Test if file is null */
 	if (! file || ! *file) {
-		g_print ("%s: error: %s was not specified\n", ghtml_app_name, type);
-		exit(1);
+		g_printerr ("%s: error: %s was not specified\n", ghtml_app_name, type);
+		ghtml_die(1);
 	}
 
 	/* Test if file exists. */
 	if (!g_file_test(file, G_FILE_TEST_EXISTS)) {
-		g_print ("%s: error: %s `%s' not found\n", ghtml_app_name, type, file);
-		exit(1);
+		g_printerr ("%s: error: %s `%s' not found\n", ghtml_app_name, type, file);
+		ghtml_die(1);
 	}
 
 	/* Test if file is directory */
 	if (g_file_test(file, G_FILE_TEST_IS_DIR)) {
-		g_print (
+		g_printerr (
 			"%s: error: `%s' is not a %s, it is a directory\n", 
 			ghtml_app_name, file, type
 		);
-		exit(1);
+		ghtml_die(1);
 	}
 
 	/* Possibly test if the file is executable */
 	if (checkExec && !g_file_test(file, G_FILE_TEST_IS_EXECUTABLE)) {
-		g_print (
+		g_printerr (
 			"%s: error: `%s' is not an executable %s file.\n", 
 			ghtml_app_name, file, type
 		);
-		exit(1);
+		ghtml_die(1);
 	}
 
 }
@@ -155,6 +174,18 @@ int parse_options(int argc, char * argv[], char * subopt) {
 					goto missing_required_string;
 				}
             }
+            if (g_str_equal(argv[i], "--js-rc") || g_str_equal(argv[i], "-j")) {
+				if (argv[i + 1]) {
+					ghtml_check_required_file("JavaScript file", argv[++i], false);
+	               	charbuffer_write_format(
+						ghtml_webview_environment_scripts, 
+						"Seed.include('%s');\n", argv[i]
+					);
+					continue;
+				} else {
+					goto missing_required_string;
+				}
+            }
             if (g_str_equal(argv[i], "--style-sheet") || g_str_equal(argv[i], "-s")) {
 				if (argv[i + 1]) {
 	                ghtml_webview_motif_uri = argv[++i];
@@ -224,6 +255,18 @@ int parse_options(int argc, char * argv[], char * subopt) {
 							goto missing_required_string;
 						}
 					}
+					if (item == 'j') {
+						if (! *(combo + 1) && argv[i + 1]) {
+							ghtml_check_required_file("JavaScript file", argv[++i], false);
+					       	charbuffer_write_format(
+								ghtml_webview_environment_scripts, 
+								"Seed.include('%s');\n", argv[i]
+							);
+						    break;			                						
+						} else {
+							goto missing_required_string;
+						}
+					}
 					if (item == 's') {
 						if (! *(combo + 1) && argv[i + 1]) {
 				            ghtml_webview_motif_uri = argv[++i];
@@ -243,7 +286,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 					fprintf(stderr, 
 						"%s: error: unrecognized short option: %c\n", 
 					ghtml_app_name, item);
-					return 1;
+					ghtml_die(1);
 				}
 				continue;
 			}
@@ -273,13 +316,13 @@ missing_required_integer:
 	fprintf(stderr, 
 		"%s: error: option: %s requires integer argument\n", 
 	ghtml_app_name, argv[i]);
-    return 1;
+    ghtml_die(1);
 
 missing_required_string:
 	fprintf(stderr, 
 		"%s: error: option: %s requires string argument\n", 
 	ghtml_app_name, argv[i]);
-    return 1;
+    ghtml_die(1);
 
 }
 
@@ -292,6 +335,7 @@ int main(int argc, char *argv[]) {
 	argc--; argv++;
 
 	ghtml_webview_load_statements = charbuffer_from_void();
+	ghtml_webview_environment_scripts = charbuffer_from_void();
 
 	if (argc) {
 		if (g_str_has_prefix(argv[0], "--file-opts ") && argv[1]) {
@@ -312,7 +356,9 @@ int main(int argc, char *argv[]) {
 		gtk_main();
 	}
 
-	if (ghtml_webview_seed) g_free (ghtml_webview_seed);
-    return EXIT_SUCCESS;
+	charbuffer_free(ghtml_webview_load_statements);
+	charbuffer_free(ghtml_webview_environment_scripts);
+
+    return ghtml_app_died;
 
 }

@@ -36,7 +36,7 @@ void ghtml_die(int code) {
 	if (ghtml_webview_main_context)
 		seed_simple_evaluate(ghtml_webview_main_context, "window.close()", NULL);
 
-	gtk_main_quit();
+	if (ghtml_window) gtk_main_quit();
 
 	// if gtk was not running we need to cleanup & exit as we won't be exiting
 	// this thread after the above call.
@@ -206,6 +206,10 @@ int parse_options(int argc, char * argv[], char * subopt) {
 
 			if (g_str_has_prefix(argv[i], "-") && argv[i][1] != '-') {
 				char *combo = argv[i], item = 0;
+
+				/* combo must match: -[defmtEojs] or -[de]+[fmtEojs] 
+				IF not, this is an invalid request */
+
 				while (item = *(++combo)) {
 					if (item == 't') {
 						if (! *(combo + 1) && argv[i + 1]) {
@@ -232,14 +236,6 @@ int parse_options(int argc, char * argv[], char * subopt) {
 						}
 					}
 					if (item == 'E') {
-						if (! *(combo + 1) && argv[i + 1]) {
-						    ghtml_webview_document_encoding = argv[++i];
-						    break;			                						
-						} else {
-							goto missing_required_string;
-						}
-					}
-					if (item == 'f') {
 						if (! *(combo + 1) && argv[i + 1]) {
 						    ghtml_webview_document_encoding = argv[++i];
 						    break;			                						
@@ -291,6 +287,10 @@ int parse_options(int argc, char * argv[], char * subopt) {
 				continue;
 			}
 
+			fprintf(stderr, 
+				"%s: error: unrecognized long option: %s\n", 
+			ghtml_app_name, argv[i]);
+			ghtml_die(1);
 			break;
 
         }

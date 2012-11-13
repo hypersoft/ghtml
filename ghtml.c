@@ -299,8 +299,6 @@ int parse_options(int argc, char * argv[], char * subopt) {
 			ghtml_app_argc = (argc - i);
 			ghtml_app_argv = argv + i;
 		}
-		//printf("First Script Argument: %s\n", ghtml_app_argv[0]);
-		//printf("Argument Count: %i\n", ghtml_app_argc);
 
 	}
 

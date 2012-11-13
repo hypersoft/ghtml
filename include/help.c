@@ -104,10 +104,11 @@ void ghtml_help(char *section) {
 		printf("--mime-type    or -m {STRING}  Specify document content-type\n");
 		printf("--encoding     or -E {STRING}  Specify document encoding\n\n");
 
-		  puts("--dialog   or -d  Use GTK+ Dialog decoration");
-		  puts("--explode  or -e  Activate embedded device quirks");
-		  puts("--96dpi           Enforce 96 dots per inch density");
-		  puts("--no-geo          Deny geo-location requests\n");
+		  puts("--dialog     or -d  Use GTK+ Dialog decoration");
+		  puts("--developer  or -D  Enable development inspector");
+		  puts("--explode    or -e  Activate embedded device quirks");
+		  puts("--96dpi             Enforce 96 dots per inch density");
+		  puts("--no-geo            Deny geo-location requests\n");
 
 		  puts("--onload   or -o  {STATEMENTS}\n");
 

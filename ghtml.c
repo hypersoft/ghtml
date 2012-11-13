@@ -158,6 +158,10 @@ int parse_options(int argc, char * argv[], char * subopt) {
                 ghtml_webview_geolocation = false;
                 continue;
             }
+            if (g_str_equal(argv[i], "--developer") || g_str_equal(argv[i], "-D")) {
+                ghtml_webview_developer = true;
+                continue;
+            }
             if (g_str_equal(argv[i], "--user-agent")) {
 				if (argv[i + 1]) {
 					ghtml_webview_user_agent = argv[++i];
@@ -207,7 +211,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 			if (g_str_has_prefix(argv[i], "-") && argv[i][1] != '-') {
 				char *combo = argv[i], item = 0;
 
-				/* combo must match: -[defmtEojs] or -[de]+[fmtEojs] 
+				/* combo must match: -[deDfmtEojs] or -[deD]+[fmtEojs] 
 				IF not, this is an invalid request */
 
 				while (item = *(++combo)) {
@@ -273,6 +277,10 @@ int parse_options(int argc, char * argv[], char * subopt) {
 					}
 					if (item == 'd') {
 						dialog = true;
+						continue;
+					}
+					if (item == 'D') {
+						ghtml_webview_developer = true;
 						continue;
 					}
 					if (item == 'e') {

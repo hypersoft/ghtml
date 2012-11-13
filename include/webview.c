@@ -148,7 +148,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	g_object_set (G_OBJECT(these_settings), "enable-file-access-from-file-uris", TRUE, NULL);
 
 	g_object_set (G_OBJECT(these_settings), "enable-accelerated-compositing", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-developer-extras", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-developer-extras", ghtml_webview_developer, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-fullscreen", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-spell-checking", TRUE, NULL);
 

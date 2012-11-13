@@ -52,10 +52,6 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
     g_signal_connect (G_OBJECT (this_webview), "navigation-policy-decision-requested",
     (void *) ghtml_webview_navigation_policy_request, NULL);
 
-	if (ghtml_webview_environment_scripts->index) {
-		webkit_web_view_execute_script(ghtml_webview, ghtml_webview_environment_scripts->pointer);
-	}
-
 	if (ghtml_webview_load_statements->index) webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
 
 }
@@ -100,7 +96,13 @@ void ghtml_webview_load(char *file) {
 }
 
 void ghtml_webview_window_cleared(WebKitWebView *webkitwebview, WebKitWebFrame *frame, gpointer context, gpointer window, gpointer userdata) {
+
 	ghtml_webview_js_init(context, frame);
+
+	if (ghtml_webview_environment_scripts->index) {
+		webkit_web_view_execute_script(ghtml_webview, ghtml_webview_environment_scripts->pointer);
+	}
+
 }
 
 

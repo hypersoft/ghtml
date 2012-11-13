@@ -38,8 +38,21 @@ static void ghtml_webview_title_changed(WebKitWebView *this_webview, WebKitWebFr
 
 static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, WebKitWebFrame *this_frame, gpointer this_user_data) {
 
-	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
+	const gchar *uri = webkit_web_view_get_icon_uri(this_webview);
 
+	GFile *file = NULL;
+	GFileInputStream *stream = NULL;
+	file = g_file_new_for_uri (uri);
+
+	if (file) {
+		stream = g_file_read (file, NULL, NULL);
+		if (stream) { gtk_window_set_icon(ghtml_webview, gdk_pixbuf_new_from_stream ((GInputStream *)stream, NULL, NULL));
+			g_object_unref(stream);
+		}
+	}
+	g_object_unref(file);
+
+	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));
     gtk_widget_show_all(ghtml_window);
 

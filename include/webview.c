@@ -39,6 +39,7 @@ static void ghtml_webview_title_changed(WebKitWebView *this_webview, WebKitWebFr
 static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, WebKitWebFrame *this_frame, gpointer this_user_data) {
 
 	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
+
 	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));
     gtk_widget_show_all(ghtml_window);
 
@@ -51,6 +52,9 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
     g_signal_connect (G_OBJECT (this_webview), "navigation-policy-decision-requested",
     (void *) ghtml_webview_navigation_policy_request, NULL);
 
+	if (ghtml_webview_environment_scripts->index) {
+		webkit_web_view_execute_script(ghtml_webview, ghtml_webview_environment_scripts->pointer);
+	}
 
 	if (ghtml_webview_load_statements->index) webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
 

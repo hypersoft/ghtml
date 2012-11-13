@@ -89,26 +89,6 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 			ghtml_app_argc, ghtml_app_argv
 		);
 
-		if (ghtml_webview_environment_scripts->index) {
-			SeedScript *rcinit = seed_make_script(
-				thisContext, ghtml_webview_environment_scripts->pointer, NULL, 0
-			);
-
-			seed_evaluate(thisContext, rcinit, ghtml_webview_main_global_object);
-
-			gchar *msg;
-			SeedException exception = seed_script_exception(rcinit);
-
-			if (exception) {
-				g_printerr("%s\n", msg = seed_exception_to_string(thisContext, exception));
-				g_free(msg);
-				seed_script_destroy(rcinit);
-				ghtml_die(1);
-			}
-
-			seed_script_destroy(rcinit);
-		}
-
 	}
 
 }

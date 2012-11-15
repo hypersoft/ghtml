@@ -174,7 +174,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	webkit_web_view_set_settings (ghtml_webview, these_settings);
 	ghtml_webview_load(this_file);
 
-	if (ghtml_webview_devloper) ghtml_webview_inspector_init(webkit_web_view_get_inspector(ghtml_webview));
+	if (ghtml_webview_developer) ghtml_webview_inspector_init(webkit_web_view_get_inspector(ghtml_webview));
 
 }
 

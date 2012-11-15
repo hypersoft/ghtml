@@ -49,8 +49,8 @@ static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, W
 		if (stream) { gtk_window_set_icon(ghtml_webview, gdk_pixbuf_new_from_stream ((GInputStream *)stream, NULL, NULL));
 			g_object_unref(stream);
 		}
+		g_object_unref(file);
 	}
-	g_object_unref(file);
 
 	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));

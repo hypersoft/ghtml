@@ -52,8 +52,6 @@ static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, W
 	}
 	g_object_unref(file);
 
-	if (uri) g_free(uri);
-
 	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));
     gtk_widget_show_all(ghtml_window);

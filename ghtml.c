@@ -125,7 +125,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
             if (g_str_equal(argv[i], "--file") || g_str_equal(argv[i], "-f")) {
 				if (argv[i + 1]) {
 	                file = argv[++i];
-					continue;
+					break;
 				} else {
 					goto missing_required_string;
 				}
@@ -304,8 +304,8 @@ int parse_options(int argc, char * argv[], char * subopt) {
         }
 
 		if (! ghtml_app_argc) {
-			ghtml_app_argc = (argc - i);
-			ghtml_app_argv = argv + i;
+			ghtml_app_argc = (argc - (i+1));
+			ghtml_app_argv = argv + (i+1);
 		}
 
 	}

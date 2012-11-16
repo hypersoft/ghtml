@@ -60,9 +60,6 @@ Updated app installation methods
 
 >You must have sufficient privileges to perform this operation.
 
-Added: apps/ghtml-jseval/@installhook - example installhook
-Deleted: apps/ghtml-jseval/install - deprecated
-Deleted: apps/gitplus/install - deprecated
-Added: apps/install - new app installation methods
+Supplemental GObject JavaScript Authoring help is available here: http://www.roojs.org/seed/gir-1.2-gtk-2.0/seed/index.html
 
 Ready and waiting

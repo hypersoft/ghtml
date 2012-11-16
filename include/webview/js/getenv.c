@@ -39,7 +39,7 @@ SeedValue ghtml_webview_js_getenv (SeedContext ctx, SeedObject function, SeedObj
 		jsTemp = JSStringCreateWithUTF8CString(val)
 	);  JSStringRelease(jsTemp);
 
-	g_free(val);
+	//g_free(val);
  
 	return result;
 

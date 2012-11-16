@@ -52,6 +52,11 @@ void ghtml_help(char *section) {
 		  puts("  chomp(string)  Remove trailing whitespace from string");
 		  puts("  quit(integer)  Quit program with exit status\n");
 
+		  puts("Window Functions\n");
+
+		  puts("  window.hide()   Hide window contents");
+		  puts("  window.show()   Make window contents visible");
+
 		  puts("Console Functions\n");
 
 		  puts("  console.exec(string)   Capture execution status of command");

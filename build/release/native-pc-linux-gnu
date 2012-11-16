@@ -18,7 +18,7 @@
 
 all: ghtml
 
-ghtml: ghtml.c $(shell ls ./include/*.c ./include/webview/*.c ./include/webview/js/*.c ./include/webview/js/console/*.c)
+ghtml: ghtml.c $(shell ls ./include/*.c ./include/webview/*.c ./include/webview/js/*.c ./include/webview/js/console/*.c ./include/webview/js/window/*.c)
 	@echo 'Building target: $@'
 	gcc -o "$@"  "ghtml.c" -O2 -march=native -mtune=generic -fomit-frame-pointer -pipe $(shell pkg-config --cflags --libs webkitgtk-3.0 seed)
 	@echo 'Finished building target: $@'

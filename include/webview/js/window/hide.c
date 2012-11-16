@@ -16,26 +16,17 @@
 
 */
 
-const char * GHTML_JS_INVALID_PARAMS = "invalid parameters"; 
+SeedValue ghtml_webview_js_window_hide (SeedContext ctx, SeedObject function, SeedObject thisObject, size_t argumentCount, SeedValue arguments[], SeedException * exception) {
 
-#include "js/native.c"
+	if (argumentCount) {
+		seed_make_exception (ctx, exception, GHTML_JS_INVALID_PARAMS,
+			"window.hide expected 0 arguments, got %zd", argumentCount
+		);  return seed_make_null (ctx);
+	}
 
-#include "js/chomp.c"
-#include "js/exec.c"
-#include "js/quit.c"
-#include "js/puts.c"
-#include "js/chdir.c"
+	gtk_widget_hide(ghtml_window);
+ 
+	return seed_make_null (ctx);
 
-#include "js/getenv.c"
-#include "js/setenv.c"
-#include "js/delenv.c"
-
-#include "js/console/exec.c"
-#include "js/console/error.c"
-#include "js/console/print.c"
-#include "js/console/arguments.c"
-
-#include "js/window/hide.c"
-
-#include "js/init.c"
+}
 

@@ -89,6 +89,15 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 			ghtml_app_argc, ghtml_app_argv
 		);
 
+	 	void *window = (void *) JSObjectGetProperty(
+			thisContext, ghtml_webview_main_global_object, 
+			jstemp = JSStringCreateWithUTF8CString("window"), NULL
+		);  JSStringRelease(jstemp);
+
+		ghtml_webview_js_native( thisContext, window, "hide", 
+			ghtml_webview_js_window_hide, NULL
+		);
+
 	}
 
 }

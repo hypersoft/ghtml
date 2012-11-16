@@ -156,7 +156,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	g_object_set (G_OBJECT(these_settings), "enable-dom-paste", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webgl", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webaudio", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-private-browsing", TRUE, NULL);
+//	g_object_set (G_OBJECT(these_settings), "enable-private-browsing", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-universal-access-from-file-uris", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-file-access-from-file-uris", TRUE, NULL);
 

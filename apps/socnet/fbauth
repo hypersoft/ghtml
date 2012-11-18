@@ -15,7 +15,7 @@ function getQueryVariable(uri, variable) {
     }
 }
 
-if (console.arguments[1] === undefined || console.arguments[1] === "") {
+if (console.arguments[1] === undefined || console.arguments[1] === "" || console.arguments[2] === undefined || console.arguments[2] === "") {
 	console.error(console.arguments[0] + ": error: insufficient arguments" + '\n');
 	quit(1);
 }
@@ -53,15 +53,22 @@ if ( self === undefined || self.uri === undefined ) return;
 
 //web_view.execute_script("window.resizeTo(document.width, document.height);");
 
+if (/https:\/\/www.facebook.com\//.test(self.uri)) {
+	console.error(console.arguments[0] + ": error: " + "incompatible api operation: check arguments" + '\n');
+	quit(1);
+}
+
 if (/https:\/\/www.facebook.com\/connect\/login_success.html\?error/.test(self.uri)) {
 	console.error(console.arguments[0] + ": error: " + getQueryVariable(self.uri, "error_description").replace(/_/g, " ").replace(/\+/g, " ") + '\n');
 	quit(1);
 }
 
 if (/https:\/\/www.facebook.com\/connect\/login_success.html/.test(self.uri)) {
-	puts(getQueryVariable(self.uri, "access_token")); 
-	puts(getQueryVariable(self.uri, "expires_in"));
-	quit(0);
+	if (getQueryVariable(self.uri, "access_token") != undefined) {
+		puts(getQueryVariable(self.uri, "access_token")); 
+		puts(getQueryVariable(self.uri, "expires_in"));
+		quit(0);
+	}
 }
 
 });

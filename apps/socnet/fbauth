@@ -39,7 +39,7 @@ web_view.settings.auto_resize_window = true;
 scroll_view.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
 browser = new Gtk.Window({title: "Social Networking Authorization"});
-window.type_hint = Gdk.WindowTypeHint.DIALOG;
+browser.type_hint = Gdk.WindowTypeHint.DIALOG;
 browser.resize(620, 300);
 browser.signal.hide.connect(function () { quit(1); });
 

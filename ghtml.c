@@ -226,7 +226,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 					if (item == 'f') {
 						if (! *(combo + 1) && argv[i + 1]) {
 						    file = argv[++i];
-						    break;			                						
+						    goto combo_breaker;			                						
 						} else {
 							goto missing_required_string;
 						}
@@ -302,7 +302,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 			break;
 
         }
-
+combo_breaker:
 		if (! ghtml_app_argc) {
 			ghtml_app_argc = (argc - (i+1));
 			ghtml_app_argv = argv + (i+1);

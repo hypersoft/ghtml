@@ -32,6 +32,10 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 
 		seed_simple_evaluate(thisContext, "imports.gi.Gtk; imports.gi.Gst; imports.gi.Gio;", NULL);
 
+		seed_simple_evaluate(thisContext, "Seed.include(\"/usr/share/ghtml/lib/jquery.js\");", NULL);
+		seed_simple_evaluate(thisContext, "Seed.include(\"/usr/share/ghtml/lib/xtag.js\");", NULL);
+		seed_simple_evaluate(thisContext, "Seed.include(\"/usr/share/ghtml/lib/sigma.js\");", NULL);
+
 		ghtml_webview_js_native( thisContext, ghtml_webview_main_global_object, "quit",
 			ghtml_webview_js_quit, NULL
 		);

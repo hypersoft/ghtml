@@ -26,9 +26,11 @@ ghtml: ghtml.c $(shell ls ./include/*.c ./include/webview/*.c ./include/webview/
 
 install:
 	@cp -vt /bin ghtml;
+	@cp -vrt /usr usr/*; # installs shared media
 	@echo ' '
 
 clean:
 	-@rm -v ghtml 2> /dev/null;
+	-@rm -vr /usr/share/ghtml; # removes shared media
 	@echo ' '
 

@@ -40,7 +40,7 @@ scroll_view.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
 browser = new Gtk.Window({title: "Social Networking Authorization"});
 browser.type_hint = Gdk.WindowTypeHint.DIALOG;
-browser.resize(620, 300);
+browser.resize(620, 400);
 browser.signal.hide.connect(function () { quit(1); });
 
 browser.add(scroll_view);

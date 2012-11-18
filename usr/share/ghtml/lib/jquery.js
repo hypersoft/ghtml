@@ -9438,3 +9438,5 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 }
 
 })( window );
+
+(function(){ var all = $.event.props, len = all.length, res = []; while (len--) { var el = all[len]; if (el != 'layerX' && el != 'layerY') res.push(el); } $.event.props = res; }());

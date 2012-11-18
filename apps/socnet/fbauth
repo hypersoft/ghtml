@@ -1,0 +1,65 @@
+#!/bin/ghtml -f
+
+<html><head>
+<script>
+
+function getQueryVariable(uri, variable) {
+    var query = uri.split('#')[1];
+	if (query === undefined) query = uri;
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+}
+
+var home_page = "https://www.facebook.com/dialog/oauth?display=popup&client_id=" + console.arguments[1] + "&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=" + console.arguments[2] + "&response_type=token";
+
+GLib = imports.gi.GLib;
+Gtk = imports.gi.Gtk;
+WebKit = imports.gi.WebKit;
+Soup = imports.gi.Soup;
+Gtk.init(null, null);
+Gdk = imports.gi.Gdk; 
+
+var web_view = new WebKit.WebView();
+var scroll_view = new Gtk.ScrolledWindow();
+
+scroll_view.add(web_view);
+
+web_view.settings.auto_resize_window = true;
+
+scroll_view.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+
+browser = new Gtk.Window({title: "Social Networking Authorization"});
+window.type_hint = Gdk.WindowTypeHint.DIALOG;
+browser.resize(620, 300);
+browser.signal.hide.connect(function () { quit(1); });
+
+browser.add(scroll_view);
+web_view.open(home_page);
+browser.show_all();
+
+web_view.signal.document_load_finished.connect( function(self, frame) { 
+
+if ( self === undefined || self.uri === undefined ) return;
+
+if (/https:\/\/www.facebook.com\/connect\/login_success.html\?error/.test(self.uri)) {
+	console.error(console.arguments[0] + ": error: " + getQueryVariable(self.uri, "error_description").replace(/_/g, " ").replace(/\+/g, " ") + '\n');
+	quit(1);
+}
+
+if (/https:\/\/www.facebook.com\/connect\/login_success.html/.test(self.uri)) {
+	puts(getQueryVariable(self.uri, "access_token")); 
+	puts(getQueryVariable(self.uri, "expires_in"));
+	quit(0);
+}
+
+});
+
+</script>
+</head>
+<body onLoad=window.hide()>
+</html>

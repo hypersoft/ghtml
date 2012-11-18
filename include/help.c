@@ -79,6 +79,16 @@ void ghtml_help(char *section) {
 		  puts("  Ghtml allows JavaScript access to window frames, whenever the calling");
 		  puts("  frame is from a local source.\n");
 
+		  puts("Additional Libraries\n");
+
+		  puts("  Ghtml provides jquery-1.8.2, and sigma-0.1 on initialization.");
+		  puts("  an experimental version of xtag is under review.\n");
+
+		  puts("Shared Resources\n");
+
+		  puts("  All resources may be located in:");
+		  puts("  /usr/share/ghtml for linux users.\n");
+
 		return;
 
 	}

@@ -15,6 +15,11 @@ function getQueryVariable(uri, variable) {
     }
 }
 
+if (console.arguments[1] === undefined || console.arguments[1] === "") {
+	console.error(console.arguments[0] + ": error: insufficient arguments" + '\n');
+	quit(1);
+}
+
 var home_page = "https://www.facebook.com/dialog/oauth?display=popup&client_id=" + console.arguments[1] + "&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=" + console.arguments[2] + "&response_type=token";
 
 GLib = imports.gi.GLib;
@@ -45,6 +50,8 @@ browser.show_all();
 web_view.signal.document_load_finished.connect( function(self, frame) { 
 
 if ( self === undefined || self.uri === undefined ) return;
+
+//web_view.execute_script("window.resizeTo(document.width, document.height);");
 
 if (/https:\/\/www.facebook.com\/connect\/login_success.html\?error/.test(self.uri)) {
 	console.error(console.arguments[0] + ": error: " + getQueryVariable(self.uri, "error_description").replace(/_/g, " ").replace(/\+/g, " ") + '\n');

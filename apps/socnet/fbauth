@@ -81,5 +81,5 @@ if (/https:\/\/www.facebook.com\/connect\/login_success.html/.test(self.uri)) {
 
 </script>
 </head>
-<body onLoad=window.hide()>
+<body onLoad=window.hide()></body>
 </html>

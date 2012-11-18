@@ -55,7 +55,7 @@ void ghtml_help(char *section) {
 		  puts("Window Functions\n");
 
 		  puts("  window.hide()   Hide window contents");
-		  puts("  window.show()   Make window contents visible");
+		  puts("  window.show()   Make window contents visible\n");
 
 		  puts("Console Functions\n");
 

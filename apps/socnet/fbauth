@@ -47,16 +47,22 @@ browser.add(scroll_view);
 web_view.open(home_page);
 browser.show_all();
 
+web_view.signal.navigation_policy_decision_requested.connect( function(self, frame, request, action, decision, data) {
+
+if (/^https:\/\/www.facebook.com\/$/.test(request.get_uri())) {
+	console.error(console.arguments[0] + ": error: " + "incompatible api operation: check arguments" + '\n');
+	quit(1);
+}
+
+return false;
+
+});
+
 web_view.signal.document_load_finished.connect( function(self, frame) { 
 
 if ( self === undefined || self.uri === undefined ) return;
 
 //web_view.execute_script("window.resizeTo(document.width, document.height);");
-
-if (/https:\/\/www.facebook.com\//.test(self.uri)) {
-	console.error(console.arguments[0] + ": error: " + "incompatible api operation: check arguments" + '\n');
-	quit(1);
-}
 
 if (/https:\/\/www.facebook.com\/connect\/login_success.html\?error/.test(self.uri)) {
 	console.error(console.arguments[0] + ": error: " + getQueryVariable(self.uri, "error_description").replace(/_/g, " ").replace(/\+/g, " ") + '\n');

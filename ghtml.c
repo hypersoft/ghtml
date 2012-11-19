@@ -178,7 +178,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 					goto missing_required_string;
 				}
             }
-            if (g_str_equal(argv[i], "--js-rc") || g_str_equal(argv[i], "-j")) {
+            if (g_str_equal(argv[i], "--include") || g_str_equal(argv[i], "-i")) {
 				if (argv[i + 1]) {
 					ghtml_check_required_file("JavaScript file", argv[++i], false);
 	               	charbuffer_write_format(
@@ -211,7 +211,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 			if (g_str_has_prefix(argv[i], "-") && argv[i][1] != '-') {
 				char *combo = argv[i], item = 0;
 
-				/* combo must match: -[deDfmtEojs] or -[deD]+[fmtEojs] 
+				/* combo must match: -[deDfmtEois] or -[deD]+[fmtEois] 
 				IF not, this is an invalid request */
 
 				while (item = *(++combo)) {
@@ -255,7 +255,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 							goto missing_required_string;
 						}
 					}
-					if (item == 'j') {
+					if (item == 'i') {
 						if (! *(combo + 1) && argv[i + 1]) {
 							ghtml_check_required_file("JavaScript file", argv[++i], false);
 					       	charbuffer_write_format(

@@ -132,7 +132,7 @@ void ghtml_help(char *section) {
 		  puts("  You may issue multiple instances of this directive. These statements");
 		  puts("  are executed when the webview has finished loading.\n");
 
-		  puts("--js-rc   or -j  {FILE}\n");
+		  puts("--include   or -i  {FILE}\n");
 
 		  puts("  Include JavaScript environment file.\n");
 

@@ -102,6 +102,10 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 			ghtml_webview_js_window_hide, NULL
 		);
 
+		ghtml_webview_js_native( thisContext, window, "show", 
+			ghtml_webview_js_window_show, NULL
+		);
+
 	}
 
 }

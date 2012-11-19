@@ -93,6 +93,8 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 			ghtml_app_argc, ghtml_app_argv
 		);
 
+		seed_simple_evaluate(thisContext, "window.argv = console.arguments;", NULL);
+
 	 	void *window = (void *) JSObjectGetProperty(
 			thisContext, ghtml_webview_main_global_object, 
 			jstemp = JSStringCreateWithUTF8CString("window"), NULL

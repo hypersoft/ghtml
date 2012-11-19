@@ -15,12 +15,12 @@ function getQueryVariable(uri, variable) {
     }
 }
 
-if (console.arguments[1] === undefined || console.arguments[1] === "" || console.arguments[2] === undefined || console.arguments[2] === "") {
-	console.error(console.arguments[0] + ": error: insufficient arguments" + '\n');
+if (argv[1] === undefined || argv[1] === "" || argv[2] === undefined || argv[2] === "") {
+	console.error(argv[0] + ": error: insufficient arguments" + '\n');
 	quit(1);
 }
 
-var home_page = "https://www.facebook.com/dialog/oauth?display=popup&client_id=" + console.arguments[1] + "&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=" + console.arguments[2] + "&response_type=token";
+var home_page = "https://www.facebook.com/dialog/oauth?display=popup&client_id=" + argv[1] + "&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=" + argv[2] + "&response_type=token";
 
 GLib = imports.gi.GLib;
 Gtk = imports.gi.Gtk;
@@ -50,7 +50,7 @@ browser.show_all();
 web_view.signal.navigation_policy_decision_requested.connect( function(self, frame, request, action, decision, data) {
 
 if (/^https:\/\/www.facebook.com\/$/.test(request.get_uri())) {
-	console.error(console.arguments[0] + ": error: " + "incompatible api operation: check arguments" + '\n');
+	console.error(argv[0] + ": error: " + "incompatible api operation: check arguments" + '\n');
 	quit(1);
 }
 
@@ -65,7 +65,7 @@ if ( self === undefined || self.uri === undefined ) return;
 //web_view.execute_script("window.resizeTo(document.width, document.height);");
 
 if (/https:\/\/www.facebook.com\/connect\/login_success.html\?error/.test(self.uri)) {
-	console.error(console.arguments[0] + ": error: " + getQueryVariable(self.uri, "error_description").replace(/_/g, " ").replace(/\+/g, " ") + '\n');
+	console.error(argv[0] + ": error: " + getQueryVariable(self.uri, "error_description").replace(/_/g, " ").replace(/\+/g, " ") + '\n');
 	quit(1);
 }
 

@@ -28,7 +28,7 @@ void ghtml_help(char *section) {
 
 		  puts("Author: Triston J. Taylor 2012 (pc.wiz.tt@gmail.com)\n");
 
-		  puts("Version: 0.87");
+		  puts("Version: 0.89");
 		  puts("License: GPL Version 3");
 		  puts("Toolkit: WebKitGTK+ 1.8.3\n");
 
@@ -57,22 +57,29 @@ void ghtml_help(char *section) {
 		  puts("  window.hide()   Hide window contents");
 		  puts("  window.show()   Make window contents visible\n");
 
+		  puts("Window Properties\n");
+
+		  puts("  window.argv[]   Command line arguments following a file or");
+		  puts("                  -- directive.\n");
+
 		  puts("Console Functions\n");
 
 		  puts("  console.exec(string)   Capture execution status of command");
 		  puts("  console.print(string)  Write raw string to stdout");
 		  puts("  console.error(string)  Write raw string to stderr\n");
 
-		  puts("Console Properties\n");
-
-		  puts("  console.arguments[]    Command line arguments not used by GTK+,");
-		  puts("                         or ghtml. Specify -- to signify script");
-		  puts("                         arguments.\n");
-
 		  puts("Global Objects\n");
 
-		  puts("  Seed   \"Gnome Seed\" environment provisions");
-		  puts("  imports  \"Gnome Seed\" GObject namespace importer\n");
+		  puts("  Gnome Project\n");
+
+		  puts("    Seed     \"Gnome Seed\"       Environment provisions");
+		  puts("    imports  \"Gnome Seed\"       GObject namespace importer\n");
+
+		  puts("  Support Libraries\n");
+
+		  puts("    jQuery \"jQuery 1.8.2\"       Environment provisions");
+		  puts("    sigma  \"sigmajs.org 0.1\"    Environment provisions");
+		  puts("    xtag   \"xtags.org xpdv\"     Environment provisions\n");
 
 		  puts("JavaScript Window Mastering\n");
 

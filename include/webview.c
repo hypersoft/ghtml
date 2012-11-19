@@ -20,20 +20,26 @@
 #include "webview/webinspector.c"
 
 static gboolean ghtml_webview_close(WebKitWebView* this_webview, GtkWidget* this_window){
+
 	gtk_widget_destroy(this_window); 
 	gtk_main_quit();
 	return TRUE;
+
 }
 
 static gboolean ghtml_webview_navigation_policy_request(WebKitWebView *this_webview, WebKitWebFrame *this_frame, WebKitNetworkRequest *this_request, WebKitWebNavigationAction *this_navigation_action, WebKitWebPolicyDecision *this_policy_decision, gpointer this_user_data) {
+
 	webkit_web_policy_decision_ignore (this_policy_decision);
 	return TRUE;
+
 }
 
 static void ghtml_webview_title_changed(WebKitWebView *this_webview, WebKitWebFrame *this_frame, gchar *this_title, gpointer this_user_data) {
+
 	if (! ghtml_app_title) {
 		gtk_window_set_title(ghtml_window, this_title);
 	}
+
 }
 
 static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, WebKitWebFrame *this_frame, gpointer this_user_data) {
@@ -67,8 +73,9 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
     g_signal_connect (G_OBJECT (this_webview), "navigation-policy-decision-requested",
     (void *) ghtml_webview_navigation_policy_request, NULL);
 
-	if (ghtml_webview_load_statements->index)
-	webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
+	if (ghtml_webview_load_statements->index) webkit_web_view_execute_script(
+		ghtml_webview, ghtml_webview_load_statements->pointer
+	);
 
 }
 
@@ -117,15 +124,18 @@ void ghtml_webview_load(char *file) {
 }
 
 void ghtml_webview_window_cleared(WebKitWebView *webkitwebview, WebKitWebFrame *frame, gpointer context, gpointer window, gpointer userdata) {
+
 	ghtml_webview_js_init(context, frame);
 	if (ghtml_webview_environment_scripts->index) {
 		webkit_web_view_execute_script(
 			ghtml_webview, ghtml_webview_environment_scripts->pointer
 		);
 	}
+
 }
 
 gboolean ghtml_webview_geo_location_request (WebKitWebView * web_view, WebKitWebFrame *frame, WebKitGeolocationPolicyDecision *policy_decision, gpointer user_data) {
+
 	if (ghtml_webview_geolocation) {
 		webkit_geolocation_policy_allow(policy_decision);
 	} else {
@@ -133,6 +143,7 @@ gboolean ghtml_webview_geo_location_request (WebKitWebView * web_view, WebKitWeb
 		webkit_geolocation_policy_deny(policy_decision);
 	}
 	return true;
+
 }
 
 void ghtml_webview_initialize(void *this_container, void *this_file, bool as_transparent) {

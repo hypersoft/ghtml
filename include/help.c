@@ -30,7 +30,7 @@ void ghtml_help(char *section) {
 
 		  puts("Version: 0.87");
 		  puts("License: GPL Version 3");
-		  puts("Toolkit: WebKitGTK+ 1.8.1\n");
+		  puts("Toolkit: WebKitGTK+ 1.8.3\n");
 
 		return;
 

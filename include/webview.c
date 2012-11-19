@@ -46,8 +46,10 @@ static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, W
 
 	if (file) {
 		stream = g_file_read (file, NULL, NULL);
-		if (stream) { gtk_window_set_icon(ghtml_window, gdk_pixbuf_new_from_stream ((GInputStream *)stream, NULL, NULL));
-			g_object_unref(stream);
+		if (stream) { 
+			gtk_window_set_icon(ghtml_window,
+				gdk_pixbuf_new_from_stream ((GInputStream *)stream, NULL, NULL)
+			); g_object_unref(stream);
 		}
 		g_object_unref(file);
 	}
@@ -65,7 +67,8 @@ static void ghtml_webview_load_finished(WebKitWebView  *this_webview, WebKitWebF
     g_signal_connect (G_OBJECT (this_webview), "navigation-policy-decision-requested",
     (void *) ghtml_webview_navigation_policy_request, NULL);
 
-	if (ghtml_webview_load_statements->index) webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
+	if (ghtml_webview_load_statements->index)
+	webkit_web_view_execute_script(ghtml_webview, ghtml_webview_load_statements->pointer);
 
 }
 
@@ -89,11 +92,14 @@ void ghtml_webview_load(char *file) {
 				while (*content != 0 && *content != '\n') content++;
 			}
 			sprintf(in, "file://%s", ghtml_app_directory);
-			webkit_web_view_load_string(ghtml_webview, content, ghtml_webview_mime_type, ghtml_webview_document_encoding, in);
-			g_free(actual_content);
+			webkit_web_view_load_string(
+				ghtml_webview, content, ghtml_webview_mime_type,
+				ghtml_webview_document_encoding, in
+			); g_free(actual_content);
 		} else {
-			fprintf(stderr, "%s: error: unable to get contents of `%s'\n", ghtml_app_name, file);
-			exit(1);
+			fprintf(stderr, "%s: error: unable to get contents of `%s'\n",
+				ghtml_app_name, file
+			); exit(1);
 			return;
 		}
 	} else {
@@ -102,22 +108,22 @@ void ghtml_webview_load(char *file) {
 			charbuffer_write_format(data, "%s", in);
 		}
 		sprintf(in, "file://%s", ghtml_app_directory);
-		webkit_web_view_load_string(ghtml_webview, data->pointer, ghtml_webview_mime_type, ghtml_webview_document_encoding, in);
-		charbuffer_free(data);
+		webkit_web_view_load_string(
+			ghtml_webview, data->pointer, ghtml_webview_mime_type,
+			ghtml_webview_document_encoding, in
+		); charbuffer_free(data);
 	}
 
 }
 
 void ghtml_webview_window_cleared(WebKitWebView *webkitwebview, WebKitWebFrame *frame, gpointer context, gpointer window, gpointer userdata) {
-
 	ghtml_webview_js_init(context, frame);
-
 	if (ghtml_webview_environment_scripts->index) {
-		webkit_web_view_execute_script(ghtml_webview, ghtml_webview_environment_scripts->pointer);
+		webkit_web_view_execute_script(
+			ghtml_webview, ghtml_webview_environment_scripts->pointer
+		);
 	}
-
 }
-
 
 gboolean ghtml_webview_geo_location_request (WebKitWebView * web_view, WebKitWebFrame *frame, WebKitGeolocationPolicyDecision *policy_decision, gpointer user_data) {
 	if (ghtml_webview_geolocation) {
@@ -129,7 +135,6 @@ gboolean ghtml_webview_geo_location_request (WebKitWebView * web_view, WebKitWeb
 	return true;
 }
 
-
 void ghtml_webview_initialize(void *this_container, void *this_file, bool as_transparent) {
 
 	WebKitWebSettings *these_settings = webkit_web_settings_new ();
@@ -140,41 +145,83 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 
 	gtk_container_add(this_container, ghtml_webview);
 
-	g_signal_connect(ghtml_webview, "close-web-view", G_CALLBACK(ghtml_webview_close), ghtml_window);
-    g_signal_connect(ghtml_webview, "load-finished", G_CALLBACK(ghtml_webview_load_finished), NULL);
-    g_signal_connect(ghtml_webview, "title-changed", G_CALLBACK(ghtml_webview_title_changed), NULL);
-    g_signal_connect(ghtml_webview, "window-object-cleared", G_CALLBACK(ghtml_webview_window_cleared), NULL);
-    g_signal_connect(ghtml_webview, "geolocation-policy-decision-requested", G_CALLBACK(ghtml_webview_geo_location_request), NULL);
+	g_signal_connect(ghtml_webview, 
+		"close-web-view", G_CALLBACK(ghtml_webview_close), ghtml_window
+	);
+
+    g_signal_connect(ghtml_webview, 
+		"load-finished", G_CALLBACK(ghtml_webview_load_finished), NULL
+	);
+
+    g_signal_connect(ghtml_webview,
+		"title-changed", G_CALLBACK(ghtml_webview_title_changed), NULL
+	);
+
+    g_signal_connect(ghtml_webview, 
+		"window-object-cleared", G_CALLBACK(ghtml_webview_window_cleared), NULL
+	);
+
+    g_signal_connect(ghtml_webview, 
+		"geolocation-policy-decision-requested",
+		G_CALLBACK(ghtml_webview_geo_location_request), NULL
+	);
+
     g_signal_connect (G_OBJECT (ghtml_webview), "document-load-finished",
     (void *) ghtml_webview_document_load_finished, NULL);
-
 
 	g_object_set (G_OBJECT(these_settings), "auto-resize-window", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "resizable-text-areas", FALSE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-spatial-navigation", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "javascript-can-access-clipboard", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-dom-paste", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webgl", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webaudio", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-private-browsing", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-universal-access-from-file-uris", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-file-access-from-file-uris", TRUE, NULL);
-
-	g_object_set (G_OBJECT(these_settings), "enable-accelerated-compositing", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-developer-extras", ghtml_webview_developer, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-fullscreen", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-spell-checking", TRUE, NULL);
 
-	g_object_set (G_OBJECT(these_settings), "enforce-96-dpi", ghtml_webview_96dpi, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-frame-flattening", ghtml_webview_explode, NULL);
 
-	if (ghtml_webview_motif_uri) g_object_set (G_OBJECT(these_settings), "user-stylesheet-uri", ghtml_webview_motif_uri, NULL);
-	if (ghtml_webview_user_agent) g_object_set (G_OBJECT(these_settings), "user-agent", ghtml_webview_user_agent, NULL);
+	g_object_set (G_OBJECT(these_settings),
+		"javascript-can-access-clipboard", TRUE, NULL
+	);
+
+	g_object_set (G_OBJECT(these_settings),
+		"enable-universal-access-from-file-uris", TRUE, NULL
+	);
+
+	g_object_set (G_OBJECT(these_settings),
+		"enable-file-access-from-file-uris", TRUE, NULL
+	);
+
+	g_object_set (G_OBJECT(these_settings),
+		"enable-accelerated-compositing", TRUE, NULL
+	);
+
+	g_object_set (G_OBJECT(these_settings), 
+		"enable-developer-extras", ghtml_webview_developer, NULL
+	);
+
+	g_object_set (G_OBJECT(these_settings), 
+		"enforce-96-dpi", ghtml_webview_96dpi, NULL
+	);
+
+	g_object_set (G_OBJECT(these_settings), 
+		"enable-frame-flattening", ghtml_webview_explode, NULL
+	);
+
+	if (ghtml_webview_motif_uri) g_object_set (G_OBJECT(these_settings), 
+		"user-stylesheet-uri", ghtml_webview_motif_uri, NULL
+	);
+
+	if (ghtml_webview_user_agent) g_object_set (G_OBJECT(these_settings), 
+		"user-agent", ghtml_webview_user_agent, NULL
+	);
 
 	webkit_web_view_set_settings (ghtml_webview, these_settings);
 	ghtml_webview_load(this_file);
 
-	if (ghtml_webview_developer) ghtml_webview_inspector_init(webkit_web_view_get_inspector(ghtml_webview));
+	if (ghtml_webview_developer) ghtml_webview_inspector_init(
+		webkit_web_view_get_inspector(ghtml_webview)
+	);
 
 }
 

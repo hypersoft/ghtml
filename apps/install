@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # /*
 #	This file is part of ghtml.
@@ -32,32 +32,36 @@ installDefault="/usr/bin";
 installDir="${INSTALLDIR:-$installDefault}";
 
 test "$group" = --help || test "$group" = -h || test "$group" = '-?' || \
-	test -z "$group" && {
+test -z "$group" && {
 
-echo '\n' \
-USAGE: $this [GROUP] [-e] [TITLE]';\n\n' \
-\
-DESCRIPTION: Install the application by its GROUP name and'\n' \
-TITLE to environment variable INSTALLDIR or $installDefault'\n\n' \
-\
-GROUP: The name of the path in: $localPath'\n' \
-TITLE: The name of the 'file' in: $localPath/GROUP'\n\n' \
-\
-If option -e is supplied, execute $localPath/GROUP/TITLE'\n' \
-with remaining arguments. If TITLE is not supplied with -e,'\n' \
-list all executables 'in' $localPath/GROUP'\n\n' \
-\
-If TITLE is not supplied, execute $localPath/GROUP/@group'\n' \
-'if' that program is not present, try to'\n' \
-'install' \'$localPath/GROUP/GROUP\' \'$installDir\''\n' \
-and 'if' that fails show a listing of all valid resources in'\n' \
-$localPath/GROUP'\n\n' \
-\
-'if' TITLE is -- all following arguments are passed to'\n' \
-$localPath/GROUP/@group'\n';
+cat <<EOF
+
+USAGE: $this [GROUP] [-e] [TITLE]
+
+DESCRIPTION: Install the application by its GROUP name and
+TITLE to environment variable INSTALLDIR or $installDefault
+
+GROUP: The name of the path in: $localPath
+TITLE: The name of the file in: $localPath/GROUP
+
+If option -e is supplied, execute $localPath/GROUP/TITLE
+with remaining arguments. If TITLE is not supplied with -e,
+list all executables in $localPath/GROUP
+
+If TITLE is not supplied, execute $localPath/GROUP/@group
+if that program is not present, try to
+install $localPath/GROUP/GROUP $installDir
+and if that fails show a listing of all valid resources in
+$localPath/GROUP
+
+
+if TITLE is -- all following arguments are passed to
+$localPath/GROUP/@group
+
+EOF
 
 test -w "$installDir" ||
-echo You must have sufficient privileges to perform this operation.'\n';
+echo You must have sufficient privileges to perform this operation.$'\n'
 
 test -n $1;
 
@@ -104,20 +108,20 @@ echo "";
 test ! -e "$resource" && {
 	(   cd "$localPath/$group" 2>&- && {
 
-		echo "Listing of resources in $group:"'\n'; list=`echo -n *`;
+		echo "Listing of resources in $group:"$'\n'; list=`echo -n *`;
 
 	}
 		test -z "$list" || test "$list" = '*' && {
-			echo no resources available 'for' $group.'\n';
-		} || echo "$list"'\n';
+			echo no resources available 'for' $group.$'\n';
+		} || echo "$list"R'\n';
 
 	);  exit 1;
 }
 
 test -w "$installDir" || {
 
-	echo You don\'t have sufficient privileges to'\n'"install" \
-	\'$resource\' \'$installDir\''\n';
+	echo You don\'t have sufficient privileges to$'\n'"install" \
+	\'$resource\' to \'$installDir\'$'\n';
 
 	exit 1;
 } >&2;

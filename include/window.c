@@ -16,6 +16,7 @@
 
 */
 
+
 static void ghtml_window_destroy(GtkWidget* widget, GtkWidget* window){
 	ghtml_die(0);
 }
@@ -29,9 +30,6 @@ static void ghtml_window_initialize(int width, int height, bool as_dialog, void 
 
 	ghtml_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-	GdkScreen* this_screen = gtk_widget_get_screen(ghtml_window);
-	void* this_compositing = gdk_screen_get_rgba_visual(this_screen);
-
 	g_signal_connect(ghtml_window, "destroy", G_CALLBACK(ghtml_window_destroy), NULL);
 
 	void *ghtml_window_scrollable_content_area = gtk_scrolled_window_new(NULL, NULL);
@@ -43,10 +41,6 @@ static void ghtml_window_initialize(int width, int height, bool as_dialog, void 
 	if (ghtml_app_title) gtk_window_set_title(ghtml_window, ghtml_app_title);
 
 	gtk_window_set_default_size(ghtml_window, width, height);
-
-	//gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
-
-	gtk_widget_set_visual(ghtml_window_scrollable_content_area, this_compositing);
 
 	ghtml_webview = WEBKIT_WEB_VIEW(webkit_web_view_new());
 

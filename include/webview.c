@@ -151,7 +151,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	WebKitWebSettings *these_settings = webkit_web_settings_new ();
 
 	if (as_transparent) {
-		webkit_web_view_set_transparent(ghtml_webview, as_transparent);
+//		webkit_web_view_set_transparent(ghtml_webview, as_transparent);
 	}
 
 	gtk_container_add(this_container, ghtml_webview);

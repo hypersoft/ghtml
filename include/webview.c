@@ -98,7 +98,7 @@ void ghtml_webview_load(char *file) {
 			if (*content == '#' && *(content+1) == '!') {
 				while (*content != 0 && *content != '\n') content++;
 			}
-			sprintf(in, "file://%s", ghtml_app_directory);
+			sprintf(in, "file://%s/%s", ghtml_app_directory, file);
 			webkit_web_view_load_string(
 				ghtml_webview, content, ghtml_webview_mime_type,
 				ghtml_webview_document_encoding, in

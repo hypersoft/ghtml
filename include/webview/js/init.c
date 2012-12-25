@@ -108,6 +108,10 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 			ghtml_webview_js_window_show, NULL
 		);
 
+		ghtml_webview_js_native( thisContext, window, "icon", 
+			ghtml_webview_js_window_icon, NULL
+		);
+
 	}
 
 }

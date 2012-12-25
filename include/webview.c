@@ -48,7 +48,7 @@ static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, W
 
 	GFile *file = NULL;
 	GFileInputStream *stream = NULL;
-	file = g_file_new_for_uri (uri);
+	file = g_file_new_for_uri ("file:///usr/share/ghtml/stock/favicon.ico");
 
 	if (file) {
 		stream = g_file_read (file, NULL, NULL);
@@ -181,7 +181,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 	g_object_set (G_OBJECT(these_settings), "auto-resize-window", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "resizable-text-areas", FALSE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-spatial-navigation", TRUE, NULL);
-	g_object_set (G_OBJECT(these_settings), "enable-dom-paste", TRUE, NULL);
+	g_object_set (G_OBJECT(these_settings), "enable-dom-paste", FALSE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webgl", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-webaudio", TRUE, NULL);
 	g_object_set (G_OBJECT(these_settings), "enable-private-browsing", TRUE, NULL);
@@ -190,7 +190,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 
 
 	g_object_set (G_OBJECT(these_settings),
-		"javascript-can-access-clipboard", TRUE, NULL
+		"javascript-can-access-clipboard", FALSE, NULL
 	);
 
 	g_object_set (G_OBJECT(these_settings),

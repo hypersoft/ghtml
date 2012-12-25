@@ -54,13 +54,14 @@ function mode_changed() {
 			visibility = "visible";
 			height = "57px"; 
 		}
-		window.resizeTo(document.width + 5, document.height + 5);
+		window.resizeTo(document.width, document.height);
 		outputSelected(document.forms[0]['file']);
 	} else {
 		with (files.style) {
-			margin = "0"; padding: 0; visibility = "hidden"; height = 0;
+			margin = 0; padding = 0; visibility = "hidden"; height = 0;
 		}
-		window.resizeTo(W, H + 10);
+		window.resizeTo(W, H);
+		window.resizeTo(W, H);
 	}
 	if (gitCommitMode.value == "All") {
 		gitArg.value = "-a";
@@ -131,10 +132,12 @@ function build_selections() {
 
 function bodyOnLoad() {
 	build_selections();
-	W = document.width + 5;
-	H = document.height + 5;
+	W = document.width+5;
+	H = document.height+5;
+	window.icon("file:///usr/share/ghtml/stock/hypersoft.gif");
 	window.resizeTo(W, H);
 	gitMessage.focus();
+	
 }
 
 function gitCurrentBranch() {
@@ -260,7 +263,7 @@ function insertStatus() {
 <label for=gitPush><span class=accelerator>p</span>ush remote</label>
 </td></tr>
 </table>
-<div style="width: 100%" align=right>
+<div style="width: 500px" align=right>
 <button id=commitButton type=button accessKey=c onclick="gitCommit(gitCommitMode.value, gitArg.value, (gitMessage.value + '\n\n' + gitDetails.value).trim());">
 <span class=accelerator>C</span>ommit</button>
 </div>

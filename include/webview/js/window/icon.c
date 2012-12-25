@@ -20,7 +20,7 @@ SeedValue ghtml_webview_js_window_icon (SeedContext ctx, SeedObject function, Se
 
 	if (argumentCount != 1) {
 		seed_make_exception (ctx, exception, GHTML_JS_INVALID_PARAMS,
-			"chdir expected 1 argument, got %zd", argumentCount
+			"windo.icon expected 1 argument, got %zd", argumentCount
 		);  return seed_make_null (ctx);
 	}
 

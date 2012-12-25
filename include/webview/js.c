@@ -38,6 +38,7 @@ const char * GHTML_JS_INVALID_PARAMS = "invalid parameters";
 #include "js/window/hide.c"
 #include "js/window/show.c"
 #include "js/window/icon.c"
+#include "js/window/center.c"
 
 #include "js/init.c"
 

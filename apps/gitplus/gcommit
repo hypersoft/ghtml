@@ -136,6 +136,7 @@ function bodyOnLoad() {
 	H = document.height+5;
 	window.icon("file:///usr/share/ghtml/stock/hypersoft.gif");
 	window.resizeTo(W, H);
+	window.center();
 	gitMessage.focus();
 	
 }

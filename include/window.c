@@ -30,6 +30,14 @@ static void ghtml_window_initialize(int width, int height, bool as_dialog, void 
 
 	ghtml_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
+	GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (ghtml_window));
+	GdkVisual *visual = gdk_screen_get_rgba_visual (screen);
+
+	if (visual == NULL)
+	visual = gdk_screen_get_system_visual (screen);
+
+	gtk_widget_set_visual (ghtml_window, visual);
+
 	g_signal_connect(ghtml_window, "destroy", G_CALLBACK(ghtml_window_destroy), NULL);
 
 	void *ghtml_window_scrollable_content_area = gtk_scrolled_window_new(NULL, NULL);

@@ -60,7 +60,7 @@ static void ghtml_webview_document_load_finished(WebKitWebView  *this_webview, W
 		g_object_unref(file);
 	}
 
-	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
+//	gtk_window_set_position(ghtml_window, GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_widget_grab_focus(GTK_WIDGET(ghtml_webview));
     gtk_widget_show_all(ghtml_window);
 
@@ -150,9 +150,7 @@ void ghtml_webview_initialize(void *this_container, void *this_file, bool as_tra
 
 	WebKitWebSettings *these_settings = webkit_web_settings_new ();
 
-	if (as_transparent) {
-//		webkit_web_view_set_transparent(ghtml_webview, as_transparent);
-	}
+	webkit_web_view_set_transparent(ghtml_webview, as_transparent);
 
 	gtk_container_add(this_container, ghtml_webview);
 

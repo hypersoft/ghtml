@@ -115,6 +115,9 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 		ghtml_webview_js_native( thisContext, window, "center", 
 			ghtml_webview_js_window_center, NULL
 		);
+		ghtml_webview_js_native( thisContext, window, "size", 
+			ghtml_webview_js_window_size, NULL
+		);
 
 	}
 

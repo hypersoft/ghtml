@@ -118,6 +118,9 @@ void ghtml_webview_js_init(void *thisContext, void *thisFrame) {
 		ghtml_webview_js_native( thisContext, window, "size", 
 			ghtml_webview_js_window_size, NULL
 		);
+		ghtml_webview_js_native( thisContext, window, "fullScreen", 
+			ghtml_webview_js_window_fullScreen, NULL
+		);
 
 	}
 

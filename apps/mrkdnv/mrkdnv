@@ -1,0 +1,18 @@
+#!/bin/bash
+
+lib=/usr/share/mrkdnv/Markdown.pl;
+
+[[ -e $lib ]] || {
+	errno=$?;
+	echo $0: error: unable to locate markdown library: resolution: re-install mrkdnv;
+	exit $errno;
+} >&2;
+
+title=${title:-$1};	
+d=${dimensions:-${2:-500x425}};
+file=${file:-${3:--}};
+perl "$lib" --html4tags "${file}" \
+|	 ghtml -d --width ${d%*x} --height ${d#*x} --title "${title}" \
+	-o "${onload:-}" \
+& disown $!;
+

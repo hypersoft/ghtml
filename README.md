@@ -1,7 +1,7 @@
 Ghtml
 =====
 
-#### *The GTK+ HTML Windowing Toolkit*
+### *The GTK+ HTML Windowing Toolkit*
 
 Ghtml features its own lightweight build configuration system using **bash** and 
 **pkg-config** as its "special" runtime requirements.
@@ -38,10 +38,43 @@ from a modern browser with a few security considerations.
 **ghtml** operates in a discipline based security format. This means all 
 security is based on **local content trust**, and **local user access rights**.
 
+<br>
+***
+Quick Installation Guide
+=====
+
+>git clone https://github.com/hypersoft/ghtml.git;
+
+>cd ghtml;
+
+>./configure && make && sudo make install;
+
+You may get some errors if you:
+
+* Aren't running a [GNU/Linux](http://www.gnu.org/os) system
+* Don't have Gnome, or one of the required development packages installed
+
+	*Most errors can be fixed, they just weren't planned for during development*
+
+<br>
+***
 Anouncements
 ============
 
-Updated app installation methods
+###New markdown viewer
+>\#! sudo apps/install mrkdnv
+
+<br>
+###New Javascript Additions (unstable)
+* Window Full Screen: `window.fullScreen()`
+* Window Maximize/Unmaximize: `window.maximize(bool)`
+* Icon support: `window.icon(file)`
+* Window Centering: `window.center()`
+
+	**For window centering to work during load, you need to have the window, size set from the command line.**
+
+<br>
+###Updated app installation methods
 
 >USAGE: apps/install group [-e] [title];
 
@@ -64,4 +97,4 @@ Updated app installation methods
 
 >You must have sufficient privileges to perform this operation.
 
-Ready and waiting
+#####Ready and waiting

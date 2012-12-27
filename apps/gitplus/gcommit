@@ -1,10 +1,17 @@
-#!/bin/ghtml -f
+#!/bin/ghtml --file-opts -D --dialog --width 530 --height 425
 
 <html>
 <head>
 <title>Git - Commit</title>
 <style>
 
+input:not([type="image"]), textarea {
+	
+	border-radius: 3px;
+	border-color: black;
+	background-color: #2e2e2e;
+	color: buttontext;	
+}
 * {
 	font-size: 10pt;
 }
@@ -132,14 +139,10 @@ function build_selections() {
 
 function bodyOnLoad() {
 	build_selections();
-	W = document.width+5;
-	H = document.height+5;
 	window.icon("file:///usr/share/ghtml/stock/hypersoft.gif");
-	window.size(W, H);
 	window.resizeTo(W, H);
-	window.center();
 	gitMessage.focus();
-	
+window.center();	
 }
 
 function gitCurrentBranch() {

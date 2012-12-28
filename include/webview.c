@@ -114,7 +114,7 @@ void ghtml_webview_load(char *file) {
     	while (fgets(in, INPUT_BUFFER_MAX, stdin) == in) {
 			charbuffer_write_format(data, "%s", in);
 		}
-		sprintf(in, "file://%s", ghtml_app_directory);
+		sprintf(in, "file://%s/", ghtml_app_directory);
 		webkit_web_view_load_string(
 			ghtml_webview, data->pointer, ghtml_webview_mime_type,
 			ghtml_webview_document_encoding, in

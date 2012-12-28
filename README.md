@@ -51,7 +51,7 @@ Quick Installation Guide
 
 You may get some errors if you:
 
-* Aren't running a [GNU/Linux](http://www.gnu.org/os) system
+* Aren't running a [GNU/Linux](http://www.gnu.org/gnu/linux-and-gnu.html) system
 * Don't have Gnome, or one of the required development packages installed
 
 	*Most errors can be fixed, they just weren't planned for during development*

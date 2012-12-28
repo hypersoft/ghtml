@@ -116,7 +116,7 @@ For window centering to work during load, you need to have the window, size set 
 
 <script>
 /* For: Ghtml */
-	if (Seed) 	/* Load My jQuery CSS */ Seed.include("README/md.css.jq");
+	if (Seed) 	/* Load My jQuery CSS */ Seed.include("README.d/md.css.jq");
 /* End Ghtml */
 </script>
 

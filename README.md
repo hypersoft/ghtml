@@ -62,11 +62,15 @@ Anouncements
 ============
 
 ###New markdown viewer
+####Installation:
 >\#! sudo apps/install mrkdnv
+
+####Synopsis:
+> mrkdnv title WIDTHxHEIGHT [FILENAME]
 
 <br>
 ###New Javascript Additions (unstable)
-* Window Full Screen: `window.fullScreen()`
+* Window Full Screen: `window.fullScreen(bool)`
 * Window Maximize/Unmaximize: `window.maximize(bool)`
 * Icon support: `window.icon(file)`
 * Window Centering: `window.center()`
@@ -87,13 +91,13 @@ Anouncements
 >If option -e is supplied, execute the title, with remaining arguments,
 >instead of copying it. If title is not supplied with -e list group executables
 
->If title is not supplied, execute ./apps/group/@installhook
+>If title is not supplied, execute ./apps/group/"@group"
 >if that program is not present, try to install
 >./apps/group/group and if that fails show a listing
 >of all valid resources belonging to group
 
 >if title is -- all following arguments are passed to
->./apps/group/@installhook
+>./apps/group/"@group"
 
 >You must have sufficient privileges to perform this operation.
 

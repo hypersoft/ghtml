@@ -1,0 +1,76 @@
+body {
+	margin-top: 3.5em;
+	color: rgba(255,255,255,0.66);
+	background-color: rgb(40,40,40);
+}
+
+h1 {
+	color: dodgerblue; text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+body>h1:first-child {
+	-webkit-margin-before: 0em;
+	margin-left: 0.2em;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	background: -webkit-linear-gradient(top, #282828 75%, rgba(40,40,40,0) 100%);
+	display: block;
+	position: fixed;
+	top: 0; left:0; width:100%;
+}
+
+h2, h3, h4, h5, h6 {
+	text-shadow: black 0.09em 0.09em 0.5em;
+}
+
+a {
+	text-decoration: none;
+	color: dodgerblue;
+}
+
+hr { border-width: 0px; 
+	background: #000;
+    height: 1px;
+    width: 100%;
+	background: -webkit-linear-gradient(left, #282828 0%,black 50%, #282828 100%);
+	margin-bottom: 2em;
+	margin-top: 1.5em;
+}
+
+body>pre {
+	display: block;
+	border-radius: 6px;
+	white-space: pre-line;
+	-webkit-padding-start: 10px;
+	background: rgba(0,0,0,0.8);
+	border-color: rgba(40,40,40,0.8);
+	padding: 1em;
+}
+
+body>blockquote>p>code, body>blockquote>pre>code {
+	display: block;
+	border-radius: 6px;
+	background: rgba(0,0,0,0.8);
+	border-color: rgba(40,40,40,0.8);
+	padding: 1em;
+}
+
+ol, ul {
+	border-radius: 6px;
+	background: rgba(0,0,0,0.8);
+	border-color: rgba(40,40,40,0.8);
+	-webkit-padding-start: 40px;
+	-webkit-padding-end: 2em;
+	-webkit-padding-before: 2;
+	-webkit-padding-after: 2;
+	-webkit-margin-after: 1em;
+	-webkit-margin-before: 1em;
+}
+
+note {
+	color: goldenrod;
+}
+
+ul {
+	padding-top: 1em; padding-bottom: 1em;
+}

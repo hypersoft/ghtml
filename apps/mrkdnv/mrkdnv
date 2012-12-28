@@ -1,5 +1,32 @@
 #!/bin/bash
 
+function_js_load_css='
+function loadCSS(filename){
+  var fileref=document.createElement("link");
+  fileref.setAttribute("rel", "stylesheet");
+  fileref.setAttribute("type", "text/css");
+  fileref.setAttribute("href", filename);
+  document.getElementsByTagName("head")[0].appendChild(fileref);
+  return fileref;
+};
+'
+
+declare MRKDNV_PROFILE MRKDNV_STYLE;
+
+while [[ ${1:0:1} == - ]]; do
+	[[ $1 == -- ]] && { shift; break; }
+	[[ $1 =~ ^--profile$|^-p$ ]] && {
+		MRKDNV_PROFILE=-o\ Seed.include\("'$2'"\)\;;
+		shift 2; continue;
+	}
+	[[ $1 =~ ^--style$|^-s$ ]] && {
+		MRKDNV_STYLE="-o loadCSS('$2');";
+		shift 2; continue;
+	}
+	echo "$0: error: incorrect parameter \`$1'" >&2;
+	exit 9;
+done
+
 lib=/usr/share/mrkdnv/Markdown.pl;
 
 [[ -e $lib ]] || {
@@ -12,6 +39,10 @@ lib=/usr/share/mrkdnv/Markdown.pl;
 	debug=-D;
 }
 
+[[ -z "$MRKDNV_STYLE" && -z "$MRKDNV_PROFILE" ]] && {
+	MRKDNV_PROFILE='-o Seed.include("/usr/share/mrkdnv/themes/hypersoft")';
+}
+
 # Environment config +(default)
 title=${1:-${title:-Markdown Viewer}};	
 d=${2:-${dimensions:-720x480}};
@@ -19,6 +50,6 @@ file=${3:-${file:--}};
 
 perl "$lib" --html4tags "${file}" \
 |	 ghtml ${debug:--}d --width ${d%*x} --height ${d#*x} --title "${title:-${file#*/}}" \
-	-o "${onload:-}" \
+	-o "$function_js_load_css" $MRKDNV_PROFILE $MRKDNV_STYLE \
 & disown $!;
 

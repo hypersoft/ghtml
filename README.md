@@ -38,85 +38,87 @@ from a modern browser with a few security considerations.
 **ghtml** operates in a discipline based security format. This means all 
 security is based on **local content trust**, and **local user access rights**.
 
-<br>
 ***
 Quick Installation Guide
 =====
 
->git clone https://github.com/hypersoft/ghtml.git;
+For linux users, installation is straightforward
 
->cd ghtml;
+	  git clone https://github.com/hypersoft/ghtml.git;
+	  cd ghtml;
+	  ./configure && make && sudo make install;
 
->./configure && make && sudo make install;
 
 You may get some errors if you:
 
 * Aren't running a [GNU/Linux](http://www.gnu.org/gnu/linux-and-gnu.html) system
 * Don't have Gnome, or one of the required development packages installed
+  
 
-	*Most errors can be fixed, they just weren't planned for during development*
+*<note>Most errors can be fixed, they just weren't planned for during development</note>*
 
-<br>
 ***
 Anouncements
 ============
 
 ###New markdown viewer
-####Installation:
->\#! sudo apps/install mrkdnv
 
-####Synopsis:
-> mrkdnv title WIDTHxHEIGHT [FILENAME]
+>	**Installation**
 
-<br>
-###New Javascript Additions (unstable)
-####Window Full Screen 
+>	`sudo apps/install mrkdnv`
 
->	  window.fullScreen(bool)
+>	**Synopsis**
 
-####Window Maximize/Unmaximize
+>	`mrkdnv title WIDTHxHEIGHT [FILENAME]`
 
->	  window.maximize(bool)
+>	<hr>
 
-####Icon support
+###New Javascript Additions <note>(unstable)</note>
 
->	  window.icon(file)
+>	**Window Full Screen**
+  
+>	`window.fullScreen(bool)`
 
-####Window Centering 
+>	**Window Maximize/Unmaximize**
 
->	  window.center()
+>	`window.maximize(bool)`
 
-For window centering to work during load, you need to have the window, size set from the command line.
+>	**Icon support**
 
-<br>
+>	`window.icon(file)`
+
+>	**Window Centering**
+
+>	`window.center()`
+
+>	<note>For window centering to work during load, you need to have the window, size set from the command line.</note>
+
+>	<hr>
+
 ###Updated app installation methods
 
->USAGE: apps/install group [-e] [title];
+	USAGE: apps/install group [-e] [title];
+	  
+	DESCRIPTION: Install the application by its group name and
+	title to environment variable INSTALLDIR or /usr/bin
+	  
+	group: The name of the path in ./apps
+	title: The name of the file in: ./apps/group
+	  
+	If option -e is supplied, execute the title, with remaining arguments,
+	instead of copying it. If title is not supplied with -e list group executables
+	  
+	If title is not supplied, execute ./apps/group/"@group"
+	if that program is not present, try to install
+	./apps/group/group and if that fails show a listing
+	of all valid resources belonging to group
+	  
+	if title is -- all following arguments are passed to
+	./apps/group/"@group"
+	  
+	You must have sufficient privileges to perform this operation.
 
->DESCRIPTION: Install the application by its group name and
->title to environment variable INSTALLDIR or /usr/bin
-
->group: The name of the path in ./apps
->title: The name of the file in: ./apps/group
-
->If option -e is supplied, execute the title, with remaining arguments,
->instead of copying it. If title is not supplied with -e list group executables
-
->If title is not supplied, execute ./apps/group/"@group"
->if that program is not present, try to install
->./apps/group/group and if that fails show a listing
->of all valid resources belonging to group
-
->if title is -- all following arguments are passed to
->./apps/group/"@group"
-
->You must have sufficient privileges to perform this operation.
-
+<hr>
 #####Ready and waiting
 
-<script>
-/* For: Ghtml */
-	if (Seed) 	/* Load My jQuery CSS */ Seed.include("README.d/md.css.jq");
-/* End Ghtml */
-</script>
 

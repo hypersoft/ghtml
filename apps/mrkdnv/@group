@@ -37,12 +37,15 @@ echo ""
 
 shared_dir=/usr/share/mrkdnv;
 
-mkdir -p $shared_dir;
+mkdir -p $shared_dir{,/themes};
 
 status=`install -vt "$installDir" "$byApplication" 2>&1 || \
 echo -n "$this: $group: installation failed to copy: " >&2;`;
 
 status=`install -vt "$shared_dir" "apps/mrkdnv/Markdown/Markdown.pl" 2>&1 || \
+echo -n "$this: $group: installation failed to copy: " >&2;`;
+
+status=`install -vt "$shared_dir/themes" apps/mrkdnv/themes/* 2>&1 || \
 echo -n "$this: $group: installation failed to copy: " >&2;`;
 
 echo "$status";

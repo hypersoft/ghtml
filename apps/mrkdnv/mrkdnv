@@ -12,11 +12,13 @@ lib=/usr/share/mrkdnv/Markdown.pl;
 	debug=-D;
 }
 
-title=${title:-$1};	
-d=${dimensions:-${2:-500x425}};
-file=${file:-${3:--}};
+# Environment config +(default)
+title=${1:-${title:-Markdown Viewer}};	
+d=${2:-${dimensions:-720x480}};
+file=${3:-${file:--}};
+
 perl "$lib" --html4tags "${file}" \
-|	 ghtml ${debug:--}d --width ${d%*x} --height ${d#*x} --title "${title}" \
+|	 ghtml ${debug:--}d --width ${d%*x} --height ${d#*x} --title "${title:-${file#*/}}" \
 	-o "${onload:-}" \
 & disown $!;
 

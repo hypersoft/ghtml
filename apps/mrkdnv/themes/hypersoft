@@ -1,5 +1,4 @@
 // Hypersoft Markdown Theme
 
-loadCSS("/usr/share/mrkdnv/themes/hypersoft.css");
-
+loadHeadCSS("/usr/share/mrkdnv/themes/hypersoft.css");
 

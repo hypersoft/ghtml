@@ -8,7 +8,7 @@ h1 {
 	color: dodgerblue; text-shadow: black 0.1em 0.1em 0.2em;
 }
 
-body>h1:first-child {
+body>h1:first-of-type {
 	-webkit-margin-before: 0em;
 	margin-left: 0.2em;
 	padding-top: 0.2em;

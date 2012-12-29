@@ -1,7 +1,8 @@
 #!/bin/bash
 
-function_js_load_css='
-function loadCSS(filename){
+declare -A MRKDNV_ENGINE[0]='
+
+function loadHeadCSS(filename){
   var fileref=document.createElement("link");
   fileref.setAttribute("rel", "stylesheet");
   fileref.setAttribute("type", "text/css");
@@ -9,23 +10,52 @@ function loadCSS(filename){
   document.getElementsByTagName("head")[0].appendChild(fileref);
   return fileref;
 };
-'
 
-declare MRKDNV_PROFILE MRKDNV_STYLE;
+function loadHeadScript(filename){
+  var fileref=document.createElement("script");
+  fileref.setAttribute("type", "text/javascript");
+  fileref.setAttribute("src", filename);
+  document.getElementsByTagName("head")[0].appendChild(fileref);
+  return fileref;
+};
+
+function switchSource(o) {
+	if ((n = o.getAttribute("engine"))) loadHeadScript(n);
+	if ((n = o.getAttribute("theme"))) loadHeadScript("/usr/share/mrkdnv/themes/" + n);
+	if ((n = o.getAttribute("style"))) loadHeadCSS(n);
+	if ((n = o.getAttribute("title"))) window.document.title = n;
+	document.removeChild(this);
+};
+
+$("markdown").each(function(){ switchSource(this); });
+
+'
 
 while [[ ${1:0:1} == - ]]; do
 	[[ $1 == -- ]] && { shift; break; }
-	[[ $1 =~ ^--profile$|^-p$ ]] && {
-		MRKDNV_PROFILE=-o\ Seed.include\("'$2'"\)\;;
+	[[ $1 =~ ^--engine$|^-e$ ]] && {
+		MRKDNV_ENGINE+='loadHeadScript("'$2'");';
+		shift 2; continue;
+	}
+	[[ $1 =~ ^--theme$|^-t$ ]] && {
+		MRKDNV_ENGINE[theme]='loadHeadScript("/usr/share/mrkdnv/themes/'$2'");';
 		shift 2; continue;
 	}
 	[[ $1 =~ ^--style$|^-s$ ]] && {
-		MRKDNV_STYLE="-o loadCSS('$2');";
+		MRKDNV_ENGINE[style]+='loadHeadCSS("'$2'");';
 		shift 2; continue;
 	}
 	echo "$0: error: incorrect parameter \`$1'" >&2;
 	exit 9;
 done
+
+#[[ -z "${MRKDNV_ENGINE[*]}" ]] && {
+#	MRKDNV_ENGINE[theme]='loadHeadScript("/usr/share/mrkdnv/themes/hypersoft");';
+#}
+
+[[ -n "${onload:0:1}" ]] && MRKDNV_ENGINE+="$onload";
+
+(( $debug )) && debug=-D;
 
 lib=/usr/share/mrkdnv/Markdown.pl;
 
@@ -35,21 +65,11 @@ lib=/usr/share/mrkdnv/Markdown.pl;
 	exit $errno;
 } >&2;
 
-(( $debug )) && {
-	debug=-D;
-}
-
-[[ -z "$MRKDNV_STYLE" && -z "$MRKDNV_PROFILE" ]] && {
-	MRKDNV_PROFILE='-o Seed.include("/usr/share/mrkdnv/themes/hypersoft")';
-}
-
 # Environment config +(default)
-title=${1:-${title:-Markdown Viewer}};	
-d=${2:-${dimensions:-720x480}};
-file=${3:-${file:--}};
+title=${1:-${title:-Markdown Viewer}} d=${2:-${dimensions:-720x480}} file=${3:-${file:--}};
 
 perl "$lib" --html4tags "${file}" \
 |	 ghtml ${debug:--}d --width ${d%*x} --height ${d#*x} --title "${title:-${file#*/}}" \
-	-o "$function_js_load_css" $MRKDNV_PROFILE $MRKDNV_STYLE \
+	-o "$function_js_load_css" -o "${MRKDNV_ENGINE[*]}" \
 & disown $!;
 

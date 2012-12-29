@@ -43,9 +43,9 @@ Quick Installation Guide
 
 For linux users, installation is straightforward
 
-	  git clone https://github.com/hypersoft/ghtml.git;
-	  cd ghtml;
-	  ./configure && make && sudo make install;
+	git clone https://github.com/hypersoft/ghtml.git;
+	cd ghtml;
+	./configure && make && sudo make install;
 
 
 You may get some errors if you:
@@ -62,10 +62,6 @@ Anouncements
 
 ###New markdown viewer
 
-**Installation**
-
-  	sudo apps/install mrkdnv
-
 **Description**
 
   	Graphical Markdown Document Rendering Engine
@@ -74,10 +70,14 @@ Anouncements
 
 	mrkdnv [OPTIONS] [TITLE] [PIXDIMENSIONS] [FILENAME]
 	
+**Installation**
+
+  	sudo apps/install mrkdnv
+
 **Invocation**
 
 	OPTIONS
-	
+
 		--style		-s		Head stylesheet.
 		--engine	-e		Head script.
 		

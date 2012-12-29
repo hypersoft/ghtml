@@ -28,6 +28,8 @@ function switchSource(o) {
 
 $("markup").each(function(){ switchSource(this); });
 
+delete switchSource;
+
 '
 
 while [[ ${1:0:1} == - ]]; do
@@ -48,10 +50,6 @@ while [[ ${1:0:1} == - ]]; do
 	exit 9;
 done
 
-#[[ -z "${MRKDNV_ENGINE[*]}" ]] && {
-#	MRKDNV_ENGINE[theme]='loadHeadScript("/usr/share/mrkdnv/themes/hypersoft");';
-#}
-
 [[ -n "${onload:0:1}" ]] && MRKDNV_ENGINE+="$onload";
 
 (( $debug )) && debug=-D;
@@ -67,8 +65,8 @@ lib=/usr/share/mrkdnv/Markdown.pl;
 # Environment config +(default)
 title=${1:-${title:-Markdown Viewer}} d=${2:-${dimensions:-720x480}} file=${3:-${file:--}};
 
-perl "$lib" --html4tags "${file}" \
-|	 ghtml ${debug:--}d --width ${d%*x} --height ${d#*x} --title "${title:-${file#*/}}" \
-	-o "$function_js_load_css" -o "${MRKDNV_ENGINE[*]}" \
+perl "$lib" --html4tags "${file}" | ghtml ${debug:--}d -o "${MRKDNV_ENGINE[*]}" \
+	--title "${title:-${file#*/}}" \
+	--width ${d%*x} --height ${d#*x} \
 & disown $!;
 

@@ -24,10 +24,9 @@ function switchSource(o) {
 	if ((n = o.getAttribute("theme"))) loadHeadScript("/usr/share/mrkdnv/themes/" + n);
 	if ((n = o.getAttribute("style"))) loadHeadCSS(n);
 	if ((n = o.getAttribute("title"))) window.document.title = n;
-	document.removeChild(this);
 };
 
-$("markdown").each(function(){ switchSource(this); });
+$("markup").each(function(){ switchSource(this); });
 
 '
 

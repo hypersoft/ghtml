@@ -1,7 +1,4 @@
-<markdown title="Ghtml - README" theme=hypersoft />
-
-Ghtml
-=====
+#Ghtml
 
 ### *The GTK+ HTML Windowing Toolkit*
 
@@ -123,3 +120,4 @@ Anouncements
 <hr>
 #####Ready and waiting
 
+<markup theme='hypersoft'>

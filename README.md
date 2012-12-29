@@ -62,35 +62,58 @@ Anouncements
 
 ###New markdown viewer
 
->	**Installation**
+**Installation**
 
->	`sudo apps/install mrkdnv`
+  	sudo apps/install mrkdnv
 
->	**Synopsis**
+**Description**
 
->	`mrkdnv title WIDTHxHEIGHT [FILENAME]`
+  	Graphical Markdown Document Rendering Engine
+
+**Synopsis**
+
+	mrkdnv [OPTIONS] [TITLE] [PIXDIMENSIONS] [FILENAME]
+	
+**Invocation**
+
+	OPTIONS
+	
+		--style		-s		Head stylesheet.
+		--engine	-e		Head script.
+		
+		--theme		-t		Head theme script. Themes are located in
+							/usr/share/mrkdnv/themes.
+		
+		--					Break option switch
+		
+	TITLE		
+		
+		String to set for window content identity. If not supplied
+		the title is "Markdown Viewer".
+
+	PIXDIMENSIONS
+		
+		Dual integer window pixel dimension specifier of the format WxH.
+		The default value is 720x480.
+	
+	FILENAME
+		
+		Document to render. Default value is standard input.
+
+	
+**Example**
+
+	mrkdnv "README" < README.md
 
 >	<hr>
 
 ###New Javascript Additions <note>(unstable)</note>
 
->	**Window Full Screen**
-  
->	`window.fullScreen(bool)`
+**Window Centering**
 
->	**Window Maximize/Unmaximize**
+	window.center()
 
->	`window.maximize(bool)`
-
->	**Icon support**
-
->	`window.icon(file)`
-
->	**Window Centering**
-
->	`window.center()`
-
->	<note>For window centering to work during load, you need to have the window, size set from the command line.</note>
+<note>For window centering to work during load, you need to have the window, size set from the command line.</note>
 
 >	<hr>
 

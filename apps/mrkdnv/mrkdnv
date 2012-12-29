@@ -63,10 +63,10 @@ lib=/usr/share/mrkdnv/Markdown.pl;
 } >&2;
 
 # Environment config +(default)
-title=${1:-${title:-Markdown Viewer}} d=${2:-${dimensions:-720x480}} file=${3:-${file:--}};
+title=${1:-${title:-${file#*/}}} d=${2:-${dimensions:-720x480}} file=${3:-${file:--}};
 
 perl "$lib" --html4tags "${file}" | ghtml ${debug:--}d -o "${MRKDNV_ENGINE[*]}" \
-	--title "${title:-${file#*/}}" \
+	--title "${title:-Markdown Viewer}" \
 	--width ${d%*x} --height ${d#*x} \
 & disown $!;
 

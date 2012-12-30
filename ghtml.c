@@ -185,7 +185,6 @@ int parse_options(int argc, char * argv[], char * subopt) {
 						ghtml_webview_environment_scripts, 
 						"Seed.include(\"%s\");\n", argv[i]
 					);
-					puts(argv[i]);
 					continue;
 				} else {
 					goto missing_required_string;

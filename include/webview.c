@@ -98,6 +98,11 @@ void ghtml_webview_load(char *file) {
 			if (*content == '#' && *(content+1) == '!') {
 				while (*content != 0 && *content != '\n') content++;
 			}
+			if (! content || ! *content ) {
+				fprintf(stderr, "%s: error: no content to display: `%s'\n",
+					ghtml_app_name, file
+				); exit(1);
+			}
 			sprintf(in, "file://%s/%s", ghtml_app_directory, file);
 			webkit_web_view_load_string(
 				ghtml_webview, content, ghtml_webview_mime_type,
@@ -113,6 +118,9 @@ void ghtml_webview_load(char *file) {
 		charbuffer *data = charbuffer_from_void();
     	while (fgets(in, INPUT_BUFFER_MAX, stdin) == in) {
 			charbuffer_write_format(data, "%s", in);
+		}
+		if (! data->length) {
+			charbuffer_write_format(data, "%s", "<html><head></head><body></body></html>");
 		}
 		sprintf(in, "file://%s/", ghtml_app_directory);
 		webkit_web_view_load_string(

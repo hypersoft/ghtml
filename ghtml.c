@@ -58,13 +58,13 @@ void ghtml_check_required_file(char *type, char *file, bool checkExec) {
 
 	/* Test if file is null */
 	if (! file || ! *file) {
-		g_printerr ("%s: error: %s was not specified\n", ghtml_app_name, type);
+		g_printerr ("%s: error: %s was expected, yet not fully specified\n", ghtml_app_name, type);
 		ghtml_die(1);
 	}
 
 	/* Test if file exists. */
 	if (!g_file_test(file, G_FILE_TEST_EXISTS)) {
-		g_printerr ("%s: error: %s `%s' not found\n", ghtml_app_name, type, file);
+		g_printerr ("%s: error: %s `%s' was not found\n", ghtml_app_name, type, file);
 		ghtml_die(1);
 	}
 

@@ -183,8 +183,9 @@ int parse_options(int argc, char * argv[], char * subopt) {
 					ghtml_check_required_file("JavaScript file", argv[++i], false);
 	               	charbuffer_write_format(
 						ghtml_webview_environment_scripts, 
-						"Seed.include('%s');\n", argv[i]
+						"Seed.include(\"%s\");\n", argv[i]
 					);
+					puts(argv[i]);
 					continue;
 				} else {
 					goto missing_required_string;
@@ -260,7 +261,7 @@ int parse_options(int argc, char * argv[], char * subopt) {
 							ghtml_check_required_file("JavaScript file", argv[++i], false);
 					       	charbuffer_write_format(
 								ghtml_webview_environment_scripts, 
-								"Seed.include('%s');\n", argv[i]
+								"Seed.include(\"%s\");\n", argv[i]
 							);
 						    break;			                						
 						} else {
@@ -310,7 +311,7 @@ combo_breaker:
 
 	}
 
-	if (file) ghtml_check_required_file("main file", file, false); // Might exit
+	if (file) ghtml_check_required_file("valid document", file, false); // Might exit
 
 	ghtml_app_file = file;
 	ghtml_window_initialize(width, height, dialog, ghtml_app_file);	

@@ -60,12 +60,12 @@ ol, ul {
 	border-color: rgba(40,40,40,0.8);
 	-webkit-padding-start: 40px;
 	-webkit-padding-end: 2em;
-	-webkit-padding-before: 2;
-	-webkit-padding-after: 2;
+	-webkit-padding-before: 1em;
+	-webkit-padding-after: 1em;
 	-webkit-margin-after: 1em;
 	-webkit-margin-before: 1em;
+	-webkit-margin-start: 0;
 }
-
 note {
 	color: goldenrod;
 }

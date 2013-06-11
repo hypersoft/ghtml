@@ -67,6 +67,6 @@ title=${1:-${title:-${file#*/}}} d=${2:-${dimensions:-720x480}} file=${3:-${file
 
 perl "$lib" --html4tags "${file}" | ghtml ${debug:--}d -o "${MRKDNV_ENGINE[*]}" \
 	--title "${title:-Markdown Viewer}" \
-	--width ${d%*x} --height ${d#*x} \
+	--width ${d%x*} --height ${d#*x} \
 & disown $!;
 
